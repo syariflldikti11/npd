@@ -219,6 +219,59 @@ function __construct(){
         $this->session->set_flashdata('delete', $notif);
         redirect('admin/role');
     }
+    function jenis_npd()
+    {
+        $data = array(
+            'judul' => 'Data Jenis NPD',
+            'dt_jenis_npd' => $this->m_umum->get_data('jenis_npd'),
+
+        );
+        $this->template->load('admin/template', 'admin/jenis_npd', $data);
+    }
+    function tambah_jenis_npd()
+     {
+
+      $this->db->set('id_jenis_npd', 'UUID()', FALSE);
+        $this->form_validation->set_rules('nama_jenis_npd', 'nama_jenis_npd', 'required');
+
+        if ($this->form_validation->run() === FALSE)
+            $this->template->load('admin/template', 'admin/tambah_jenis_npd');
+        else {
+
+            $this->m_umum->set_data("jenis_npd");
+            $notif = "Tambah Data  Berhasil";
+            $this->session->set_flashdata('success', $notif);
+            redirect('admin/jenis_npd');
+        }
+    }
+    function update_jenis_npd($id=NULL)
+    {
+         $data = array(
+                'judul' => 'Update Jenis NPD',
+            
+
+        );
+        $this->form_validation->set_rules('id_jenis_npd', 'id_jenis_npd', 'required');
+        $this->form_validation->set_rules('nama_jenis_npd', 'nama_jenis_npd', 'required');
+       
+        if ($this->form_validation->run() === FALSE)
+           redirect('admin/jenis_npd');
+             
+        else {
+            $this->m_umum->update_data("jenis_npd");
+            $notif = " Update data Berhasil";
+            $this->session->set_flashdata('update', $notif);
+            redirect('admin/jenis_npd');
+        }
+    }
+    function delete_jenis_npd($id)
+    {
+
+        $this->m_umum->hapus('jenis_npd', 'id_jenis_npd', $id);
+        $notif = "Data berhasil dihapuskan";
+        $this->session->set_flashdata('delete', $notif);
+        redirect('admin/jenis_npd');
+    }
     function rek_05()
     {
         $data = array(

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 28 Jun 2025 pada 10.10
+-- Waktu pembuatan: 29 Jun 2025 pada 18.15
 -- Versi server: 10.4.17-MariaDB
 -- Versi PHP: 7.3.27
 
@@ -79,6 +79,31 @@ INSERT INTO `bagian` (`id_bagian`, `nama_bagian`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `jenis_npd`
+--
+
+CREATE TABLE `jenis_npd` (
+  `id_jenis_npd` varchar(100) NOT NULL,
+  `nama_jenis_npd` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `jenis_npd`
+--
+
+INSERT INTO `jenis_npd` (`id_jenis_npd`, `nama_jenis_npd`) VALUES
+('b74f66bb-5418-11f0-8b53-f8fe5ef7d437', 'Belanja Perjalanan Dinas Luar Daerah'),
+('b74f66bb-5418-11f0-8b53-f8fe5ef7d478', 'Belanja Perjalanan Dinas Dalam Daerah'),
+('be215365-5418-11f0-8b53-f8fe5ef7d437', 'Belanja Alat Tulis Kantor'),
+('c17772ee-5418-11f0-8b53-f8fe5ef7d437', 'Belanja Cetak'),
+('c7aba7d7-5418-11f0-8b53-f8fe5ef7d437', 'Belanja Penggandaan'),
+('cfaea496-5418-11f0-8b53-f8fe5ef7d437', 'Belanja Prangko, Materai dan Benda Pos Lainnya'),
+('d631ae93-5418-11f0-8b53-f8fe5ef7d437', 'Belanja Makan dan Minum Rapat'),
+('de0b6a8d-5418-11f0-8b53-f8fe5ef7d437', 'Belanja Honorarium Tim Pengelola Keuangan');
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `pegawai`
 --
 
@@ -126,15 +151,25 @@ CREATE TABLE `permintaan_anggaran` (
   `id_akun` varchar(37) NOT NULL,
   `file` varchar(100) NOT NULL,
   `tgl_input` timestamp NOT NULL DEFAULT current_timestamp(),
-  `catatan` varchar(100) NOT NULL
+  `catatan` varchar(100) NOT NULL,
+  `dokumen` varchar(100) NOT NULL,
+  `status_pptk` int(11) NOT NULL,
+  `status_kpa` int(11) NOT NULL,
+  `status_ppkeu` int(11) NOT NULL,
+  `status_bend` int(11) NOT NULL,
+  `id_jenis_npd` varchar(100) NOT NULL,
+  `ppn` int(11) NOT NULL,
+  `pajak_daerah` int(11) NOT NULL,
+  `total` int(11) NOT NULL,
+  `status_npd` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `permintaan_anggaran`
 --
 
-INSERT INTO `permintaan_anggaran` (`id_permintaan_anggaran`, `tgl_permintaan_anggaran`, `kegiatan`, `sub_kegiatan`, `program`, `no_dpa`, `tahun_anggaran`, `status_permintaan`, `id_rek_05`, `id_rek_06`, `id_akun`, `file`, `tgl_input`, `catatan`) VALUES
-('cf94767a-53f3-11f0-8b53-f8fe5ef7d437', '2025-06-28', 'Pelaksanaan Kebijakan Perekonomian', 'Koordinasi, Sinkronisasi dan Evaluasi Kebijakan Pengelolaan BUMD dan BLUD     ', 'Program Perekonomian dan Pembangunan', '4.01.03.2.04.0003', 2025, 0, '91f52979-5339-11f0-8b53-f8fe5ef7d437', '06d961c7-533b-11f0-8b53-f8fe5ef7d437', 'b4626091-536a-11f0-8b53-f8fe5ef7d437', '7c7ed28ee1b3ea7ce141d7c3b2e3ddfa.pdf', '2025-06-28 07:45:02', '');
+INSERT INTO `permintaan_anggaran` (`id_permintaan_anggaran`, `tgl_permintaan_anggaran`, `kegiatan`, `sub_kegiatan`, `program`, `no_dpa`, `tahun_anggaran`, `status_permintaan`, `id_rek_05`, `id_rek_06`, `id_akun`, `file`, `tgl_input`, `catatan`, `dokumen`, `status_pptk`, `status_kpa`, `status_ppkeu`, `status_bend`, `id_jenis_npd`, `ppn`, `pajak_daerah`, `total`, `status_npd`) VALUES
+('cf94767a-53f3-11f0-8b53-f8fe5ef7d437', '2025-06-28', 'Pelaksanaan Kebijakan Perekonomian', 'Koordinasi, Sinkronisasi dan Evaluasi Kebijakan Pengelolaan BUMD dan BLUD     ', 'Program Perekonomian dan Pembangunan', '4.01.03.2.04.0003', 2025, 4, '91f52979-5339-11f0-8b53-f8fe5ef7d437', '06d961c7-533b-11f0-8b53-f8fe5ef7d437', 'b4626091-536a-11f0-8b53-f8fe5ef7d437', '7c7ed28ee1b3ea7ce141d7c3b2e3ddfa.pdf', '2025-06-28 07:45:02', '', 'a33a10e777dc737bab4380cdbaf7e5b0.pdf', 1, 0, 0, 0, 'be215365-5418-11f0-8b53-f8fe5ef7d437', 2, 10, 200000, 1);
 
 -- --------------------------------------------------------
 
@@ -179,6 +214,35 @@ INSERT INTO `rek_06` (`id_rek_06`, `no_rek_06`, `nama_rek_06`, `id_rek_05`) VALU
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `rincian_npd`
+--
+
+CREATE TABLE `rincian_npd` (
+  `id_rincian_npd` varchar(100) NOT NULL,
+  `uraian` varchar(100) NOT NULL,
+  `anggaran` int(11) NOT NULL,
+  `rak_tersedia` int(11) NOT NULL,
+  `akum_before` int(11) NOT NULL,
+  `pencairan` int(11) NOT NULL,
+  `akum_after` int(11) NOT NULL,
+  `sisa` int(11) NOT NULL,
+  `id_permintaan_anggaran` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `rincian_npd`
+--
+
+INSERT INTO `rincian_npd` (`id_rincian_npd`, `uraian`, `anggaran`, `rak_tersedia`, `akum_before`, `pencairan`, `akum_after`, `sisa`, `id_permintaan_anggaran`) VALUES
+('2abe6426-542b-11f0-8b53-f8fe5ef7d437', 'Buku Eskpedisi', 100, 80000, 70000, 60000, 50000, 400000, 'cf94767a-53f3-11f0-8b53-f8fe5ef7d437'),
+('3d8f232c-5496-11f0-a6b2-f8fe5ef7d437', 'Buku Eskpedisi', 100000, 80000, 70000, 10000, 50000, 40000, 'cf94767a-53f3-11f0-8b53-f8fe5ef7d437'),
+('4f02a6ad-542b-11f0-8b53-f8fe5ef7d437', 'Buku Eskpedisi', 100004, 80000, 70000, 60000, 50000, 40000, 'cf94767a-53f3-11f0-8b53-f8fe5ef7d437'),
+('61fe9887-542b-11f0-8b53-f8fe5ef7d437', 'Buku Eskpedisi', 100000, 80000, 70000, 60000, 50000, 40000, 'cf94767a-53f3-11f0-8b53-f8fe5ef7d437'),
+('62b241d5-5496-11f0-a6b2-f8fe5ef7d437', 'Buku Eskpedisi', 100000, 80000, 70000, 10000, 50000, 40000, 'cf94767a-53f3-11f0-8b53-f8fe5ef7d437');
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `role`
 --
 
@@ -199,31 +263,6 @@ INSERT INTO `role` (`id_role`, `nama_role`) VALUES
 (5, 'ppk'),
 (6, 'pptk');
 
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `usul_npd`
---
-
-CREATE TABLE `usul_npd` (
-  `id_usul_npd` varchar(100) NOT NULL,
-  `tgl_usul_npd` int(11) NOT NULL,
-  `jenis_npd` int(11) NOT NULL,
-  `uraian` varchar(100) NOT NULL,
-  `anggaran` int(11) NOT NULL,
-  `rak_tersedia` int(11) NOT NULL,
-  `akum_before` int(11) NOT NULL,
-  `pencairan` int(11) NOT NULL,
-  `akum_after` int(11) NOT NULL,
-  `sisa` int(11) NOT NULL,
-  `status_pptk` int(11) NOT NULL,
-  `status_kpa` int(11) NOT NULL,
-  `status_ppkeu` int(11) NOT NULL,
-  `status_bend` int(11) NOT NULL,
-  `kwitansi` varchar(100) NOT NULL,
-  `id_usul_anggaran` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
 --
 -- Indexes for dumped tables
 --
@@ -239,6 +278,12 @@ ALTER TABLE `akun`
 --
 ALTER TABLE `bagian`
   ADD PRIMARY KEY (`id_bagian`);
+
+--
+-- Indeks untuk tabel `jenis_npd`
+--
+ALTER TABLE `jenis_npd`
+  ADD PRIMARY KEY (`id_jenis_npd`);
 
 --
 -- Indeks untuk tabel `pegawai`
@@ -265,16 +310,16 @@ ALTER TABLE `rek_06`
   ADD PRIMARY KEY (`id_rek_06`);
 
 --
+-- Indeks untuk tabel `rincian_npd`
+--
+ALTER TABLE `rincian_npd`
+  ADD PRIMARY KEY (`id_rincian_npd`);
+
+--
 -- Indeks untuk tabel `role`
 --
 ALTER TABLE `role`
   ADD PRIMARY KEY (`id_role`);
-
---
--- Indeks untuk tabel `usul_npd`
---
-ALTER TABLE `usul_npd`
-  ADD PRIMARY KEY (`id_usul_npd`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

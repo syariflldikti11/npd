@@ -30,6 +30,8 @@
       <link rel="stylesheet" href="<?= base_url();?>assets/css/custom.css" />
       <!-- calendar file css -->
       <link rel="stylesheet" href="<?= base_url();?>assets/js/semantic.min.css" />
+        <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+      
       <!--[if lt IE 9]>
       <script src="<?= base_url(); ?>assets/https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="<?= base_url(); ?>assets/https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -45,6 +47,11 @@
                         <img width="210" src="<?= base_url(); ?>assets/images/logo/logo.png" alt="#" />
                      </div>
                   </div>
+                   <?php if ($this->session->flashdata('error')): ?>
+    <div class="alert alert-danger">
+        <?php echo $this->session->flashdata('error'); ?>
+    </div>
+<?php endif; ?>
                   <div class="login_form">
                         <?php
                 echo validation_errors();
@@ -90,7 +97,7 @@
          </div>
       </div>
       <!-- jQuery -->
-      <script src="<?= base_url(); ?>assets/js/jquery.min.js"></script>
+
       <script src="<?= base_url(); ?>assets/js/popper.min.js"></script>
       <script src="<?= base_url(); ?>assets/js/bootstrap.min.js"></script>
       <!-- wow animation -->
@@ -106,3 +113,5 @@
       <script src="<?= base_url(); ?>assets/js/custom.js"></script>
    </body>
 </html>
+
+    

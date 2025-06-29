@@ -2,7 +2,7 @@
 class M_login extends CI_Model{
 
 	function auth($username,$id_role,$tahun){
-		$this->db->select('*');
+		$this->db->select('*,c.id_bagian as id_bag');
 		$this->db->from('akun a');
 		$this->db->join('role b', 'a.id_role = b.id_role');
 		$this->db->join('pegawai c', 'a.id_pegawai = c.id_pegawai');

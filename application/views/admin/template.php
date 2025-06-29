@@ -65,6 +65,7 @@
                    
                      <li><a href="<?= base_url();?>"><i class="fa fa-home red_color"></i> <span>Home</span></a></li>
                       <!--  <li><a href="<?= base_url('admin/role');?>"><i class="fa fa-briefcase orange_color"></i> <span>Role</span></a></li> -->
+                         <li><a href="<?= base_url('admin/jenis_npd');?>"><i class="fa fa-briefcase green_color"></i> <span>Jenis NPD</span></a></li>
                          <li><a href="<?= base_url('admin/bagian');?>"><i class="fa fa-briefcase green_color"></i> <span>Bagian</span></a></li>
                          <li><a href="<?= base_url('admin/akun');?>"><i class="fa fa-briefcase purple_color"></i> <span>Akun</span></a></li>
                          <li><a href="<?= base_url('admin/pegawai');?>"><i class="fa fa-briefcase blue1_color"></i> <span>Pegawai</span></a></li>

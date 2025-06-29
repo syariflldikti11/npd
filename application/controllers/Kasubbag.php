@@ -21,12 +21,126 @@ function __construct(){
          
         $this->template->load('kasubbag/template', 'kasubbag/home', $data);
     }
+
+        function npd()
+    {
+        $data = array(
+            'judul' => 'Data NPD',
+            'dt_npd' => $this->m_umum->get_npd(),
+      
+            
+
+        );
+        $this->template->load('kasubbag/template', 'kasubbag/npd', $data);
+    }
+    function kirim_npd($id)
+    {
+$sql11 = "update permintaan_anggaran set status_npd=1, status_pptk=1 where id_permintaan_anggaran='$id'";
+    $this->db->query($sql11);
+                        
+            $notif = "NPD berhasil terkirim";
+            $this->session->set_flashdata('update', $notif);
+            redirect('kasubbag/npd');
+        }
+     function rincian_npd($id)
+    {
+
+        $data = array(
+            'judul' => 'Data Rincian NPD',
+            'id' => $id,
+            'dt_rincian_npd' => $this->m_umum->get_rincian_npd($id),
+            'y' => $this->m_umum->ambil_data('permintaan_anggaran','id_permintaan_anggaran',$id),
+        );
+        $this->template->load('kasubbag/template', 'kasubbag/rincian_npd', $data);
+    }
+    function tambah_rincian_npd() { 
+    
+    $this->db->set('id_rincian_npd', 'UUID()', FALSE);
+    $this->form_validation->set_rules('uraian','uraian','required');
+    $id=$this->input->post('id_permintaan_anggaran');
+    if($this->form_validation->run() === FALSE)
+   redirect(base_url()."kasubbag/rincian_npd/".$id);
+    else
+    {
+         
+        $this->m_umum->set_data("rincian_npd");
+        $total=$this->db->query("Select sum(pencairan) as total from rincian_npd where id_permintaan_anggaran='$id'")->row()->total;
+      $sql11 = "update permintaan_anggaran set total=$total where id_permintaan_anggaran='$id'";
+    $this->db->query($sql11);
+        $notif = "Tambah Data Berhasil";
+        $this->session->set_flashdata('success', $notif);
+        redirect(base_url()."kasubbag/rincian_npd/".$id);
+    }
+  
+}
+    function update_potongan()
+  {
+           $id=$this->input->post('id_permintaan_anggaran');
+    if (!empty($_FILES["dokumen"]["name"])) {
+      $dokumen = $this->uploadDokumen();
+     
+    }
+    else {
+        $dokumen = $this->input->post('old_dokumen');
+    }
+       $data_update = array(
+      'ppn' => $this->input->post('ppn'),
+      'pajak_daerah' => $this->input->post('pajak_daerah'),
+     
+      'dokumen' => $dokumen,
+   
+    );
+    $where = array('id_permintaan_anggaran' => $this->input->post('id_permintaan_anggaran'));
+    $res = $this->m_umum->UpdateData('permintaan_anggaran', $data_update, $where);
+     if ($res >= 1) {
+
+      $notif = " Data berhasil diupdate";
+      $this->session->set_flashdata('update', $notif);
+   redirect(base_url()."kasubbag/rincian_npd/".$id);
+    } else {
+      echo "<h1>GAGAL</h1>";
+    }
+  }
+
+function update_rincian_npd()
+  {
+        
+    $this->form_validation->set_rules('id_rincian_npd','id_rincian_npd','required');
+        $id=$this->input->post('id_permintaan_anggaran');
+    if($this->form_validation->run() === FALSE)
+        redirect(base_url()."kasubbag/rincian_npd/".$id);
+    else
+    {
+      $total=$this->db->query("Select sum(pencairan) as total from rincian_npd where id_permintaan_anggaran='$id'")->row()->total;
+      $sql11 = "update permintaan_anggaran set total=$total where id_permintaan_anggaran='$id'";
+    $this->db->query($sql11);
+      $this->m_umum->update_data("rincian_npd");
+       $notif = " Data berhasil diupdate";
+            $this->session->set_flashdata('update', $notif);
+            redirect(base_url()."kasubbag/rincian_npd/".$id);
+    }
+    
+  }
+
+function delete_rincian_npd($id=NULL,$id_rek)
+{
+  
+    $this->m_umum->hapus('rincian_npd','id_rincian_npd',$id);
+      $total=$this->db->query("Select sum(pencairan) as total from rincian_npd where id_permintaan_anggaran='$id_rek'")->row()->total;
+      $sql11 = "update permintaan_anggaran set total=$total where id_permintaan_anggaran='$id_rek'";
+    $this->db->query($sql11);
+     $notif = " Data berhasil dihapuskan";
+        $this->session->set_flashdata('delete', $notif);
+        redirect(base_url()."kasubbag/rincian_npd/".$id_rek);
+        
+}
     function permintaan_anggaran()
     {
         $data = array(
             'judul' => 'Data Permintaan Anggaran',
             'dt_permintaan_anggaran' => $this->m_umum->get_permintaan_anggaran(),
             'dt_rek_05' => $this->m_umum->get_data('rek_05'),
+            'dt_jenis_npd' => $this->m_umum->get_data('jenis_npd'),
             
 
         );
@@ -52,6 +166,7 @@ $tahun=$this->session->userdata('tahun');
             redirect('kasubbag/permintaan_anggaran');
         }
     }
+
     
     function update_permintaan_anggaran()
   {
@@ -81,6 +196,7 @@ $tahun=$this->session->userdata('tahun');
       'program' => $this->input->post('program'),
       'kegiatan' => $this->input->post('kegiatan'),
       'sub_kegiatan' => $this->input->post('sub_kegiatan'),
+      'id_jenis_npd' => $this->input->post('id_jenis_npd'),
       'file' => $file,
       'id_rek_05' => $id_rek_05,
       'id_rek_06' => $id_rek_06,
@@ -135,6 +251,26 @@ $sql11 = "update permintaan_anggaran set status_permintaan=1 where id_permintaan
     $this->upload->initialize($config);
 
     if ($this->upload->do_upload('file')) {
+      return $this->upload->data("file_name");
+    }
+    $error = $this->upload->display_errors();
+    echo $error;
+    exit;
+    // return "default.jpg";
+  }
+  public function uploadDokumen()
+  {
+    $config['upload_path'] = 'upload';
+    $config['allowed_types'] = 'pdf';
+    $config['overwrite'] = false;
+    $config['max_size'] = 5000; // 1MB
+    $config['encrypt_name'] = TRUE;
+
+
+    $this->load->library('upload', $config);
+    $this->upload->initialize($config);
+
+    if ($this->upload->do_upload('dokumen')) {
       return $this->upload->data("file_name");
     }
     $error = $this->upload->display_errors();

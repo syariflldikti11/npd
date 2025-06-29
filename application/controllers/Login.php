@@ -15,6 +15,9 @@ class Login extends CI_Controller{
            if ($akses == 2) {
             redirect(site_url('kasubbag'));
         }
+         if ($akses == 6) {
+            redirect(site_url('pptk'));
+        }
       
          else {
         $data = array(
@@ -33,20 +36,10 @@ class Login extends CI_Controller{
         $password=htmlspecialchars($this->input->post('password',TRUE),ENT_QUOTES);
         $tahun=htmlspecialchars($this->input->post('tahun',TRUE),ENT_QUOTES);
         $id_role=htmlspecialchars($this->input->post('id_role',TRUE),ENT_QUOTES);
-
-         $this->form_validation->set_rules('username','username','required');
-         $this->form_validation->set_rules('password','password','required');
-         $this->form_validation->set_rules('id_role','id_role','required');
-         $this->form_validation->set_rules('tahun','tahun','required');
      
         $cek=$this->m_login->auth($username,$id_role,$tahun);
        
-       if($this->form_validation->run() === FALSE){
-               $notif = "Tidak boleh kosong";
-            $this->session->set_flashdata('delete', $notif);
-            redirect('login');
-         }
-         else {
+      
         if($cek->num_rows() > 0){ 
                         $data=$cek->row_array();
                
@@ -62,24 +55,35 @@ class Login extends CI_Controller{
                        $this->session->set_userdata('ses_nama',$data['nama_pegawai']);
                        $this->session->set_userdata('ses_bag',$data['nama_bagian']);
                          $this->session->set_userdata('tahun',$tahun);
+                         $this->session->set_userdata('tahun_akun',$data['tahun_akun']);
                     redirect('kasubbag/index');
+                 }
+                  if($data['id_role']=='6' && password_verify($password, $data['password'])){ 
+                    $this->session->set_userdata('akses','6');
+                       $this->session->set_userdata('ses_id',$data['id_akun']);
+                       $this->session->set_userdata('ses_nama',$data['nama_pegawai']);
+                       $this->session->set_userdata('ses_bag',$data['nama_bagian']);
+                         $this->session->set_userdata('tahun',$tahun);
+                         $this->session->set_userdata('ses_id_bag',$data['id_bag']);
+                              $this->session->set_userdata('tahun_akun',$data['tahun_akun']);
+                    redirect('pptk/index');
                  }
                  
              
         
      else {
-            $notif = "username/Password Salah";
-            $this->session->set_flashdata('delete', $notif);
+       $this->session->unset_userdata('akses');
+       $this->session->set_flashdata('error', 'User /Password yang Anda masukkan salah.');
             redirect('login');
         }
      
          }
               else {
-            $notif = "username/Password Salah";
-            $this->session->set_flashdata('delete', $notif);
+              $this->session->unset_userdata('akses');
+    $this->session->set_flashdata('error', 'User /Password yang Anda masukkan salah.');
             redirect('login');
         }
-    }
+    
 
      }
     
