@@ -125,6 +125,22 @@ function hitung($tabel){
      $query = $this->db->get();
      return $query->result(); 
     }
+     function get_permintaan_anggaran_admin()
+  {   
+    $id=$this->session->userdata('ses_id');
+    $tahun=$this->session->userdata('tahun');
+    $this->db->select('*');
+      $this->db->from('permintaan_anggaran a');
+    $this->db->join('jenis_npd e','a.id_jenis_npd=e.id_jenis_npd','left');
+    $this->db->join('akun b','a.id_akun=b.id_akun','left');
+    $this->db->join('rek_05 d','a.id_rek_05=d.id_rek_05','left');
+    $this->db->join('rek_06 c','a.id_rek_06=c.id_rek_06','left');
+        $this->db->where('a.tahun_anggaran',$tahun);
+    $this->db->order_by('a.tgl_input desc');
+      
+     $query = $this->db->get();
+     return $query->result(); 
+    }
      function get_npd_cetak($id)
   {   
 
@@ -159,6 +175,45 @@ function hitung($tabel){
      $query = $this->db->get();
      return $query->result(); 
     }
+    function get_npd_admin()
+  {   
+    $id=$this->session->userdata('ses_id');
+    $tahun=$this->session->userdata('tahun');
+    $this->db->select('*');
+      $this->db->from('permintaan_anggaran a');
+    $this->db->join('jenis_npd e','a.id_jenis_npd=e.id_jenis_npd','left');
+    $this->db->join('akun b','a.id_akun=b.id_akun','left');
+    $this->db->join('rek_05 d','a.id_rek_05=d.id_rek_05','left');
+    $this->db->join('rek_06 c','a.id_rek_06=c.id_rek_06','left');
+ 
+        $this->db->where('a.tahun_anggaran',$tahun);
+        $this->db->where('a.status_permintaan',4);
+    $this->db->order_by('a.tgl_input desc');
+      
+     $query = $this->db->get();
+     return $query->result(); 
+    }
+     function get_permintaan_anggaran_pptk()
+  {   
+    $id=$this->session->userdata('ses_id');
+    $tahun=$this->session->userdata('tahun');
+    $tahun_akun=$this->session->userdata('tahun_akun');
+    $id_bagian=$this->session->userdata('ses_id_bag');
+    $this->db->select('*');
+      $this->db->from('permintaan_anggaran a');
+    $this->db->join('jenis_npd e','a.id_jenis_npd=e.id_jenis_npd','left');
+    $this->db->join('akun b','a.id_akun=b.id_akun','left');
+    $this->db->join('pegawai f','f.id_pegawai=b.id_pegawai','left');
+    $this->db->join('rek_05 d','a.id_rek_05=d.id_rek_05','left');
+    $this->db->join('rek_06 c','a.id_rek_06=c.id_rek_06','left');
+        $this->db->where('a.tahun_anggaran',$tahun_akun);
+        $this->db->where('f.id_bagian',$id_bagian);
+        $this->db->where('a.status_permintaan between 1 and 4');
+    $this->db->order_by('a.status_permintaan asc');
+      
+     $query = $this->db->get();
+     return $query->result(); 
+    }
     function get_npd_pptk()
   {   
     $id=$this->session->userdata('ses_id');
@@ -174,8 +229,29 @@ function hitung($tabel){
     $this->db->join('rek_06 c','a.id_rek_06=c.id_rek_06','left');
         $this->db->where('a.tahun_anggaran',$tahun_akun);
         $this->db->where('f.id_bagian',$id_bagian);
-        $this->db->where('a.status_pptk',1);
-    $this->db->order_by('a.tgl_input desc');
+        $this->db->where('a.status_pptk between 1 and 2');
+    $this->db->order_by('a.status_pptk asc');
+      
+     $query = $this->db->get();
+     return $query->result(); 
+    }
+      function get_npd_kpa()
+  {   
+    $id=$this->session->userdata('ses_id');
+    $tahun=$this->session->userdata('tahun');
+    $tahun_akun=$this->session->userdata('tahun_akun');
+    $id_bagian=$this->session->userdata('ses_id_bag');
+    $this->db->select('*');
+      $this->db->from('permintaan_anggaran a');
+    $this->db->join('jenis_npd e','a.id_jenis_npd=e.id_jenis_npd','left');
+    $this->db->join('akun b','a.id_akun=b.id_akun','left');
+    $this->db->join('pegawai f','f.id_pegawai=b.id_pegawai','left');
+    $this->db->join('rek_05 d','a.id_rek_05=d.id_rek_05','left');
+    $this->db->join('rek_06 c','a.id_rek_06=c.id_rek_06','left');
+        $this->db->where('a.tahun_anggaran',$tahun_akun);
+        $this->db->where('f.id_bagian',$id_bagian);
+        $this->db->where('a.status_kpa between 1 and 2');
+    $this->db->order_by('a.status_kpa asc');
       
      $query = $this->db->get();
      return $query->result(); 

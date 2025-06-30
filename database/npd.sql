@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 29 Jun 2025 pada 18.15
--- Versi server: 10.4.17-MariaDB
--- Versi PHP: 7.3.27
+-- Waktu pembuatan: 30 Jun 2025 pada 11.03
+-- Versi server: 10.4.25-MariaDB
+-- Versi PHP: 7.4.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -42,7 +42,7 @@ INSERT INTO `akun` (`id_akun`, `id_role`, `id_pegawai`, `tahun_akun`) VALUES
 ('017293f5-536b-11f0-8b53-f8fe5ef7d437', 3, '4a6ba4d3-536a-11f0-8b53-f8fe5ef7d437', 2025),
 ('a922a11f-536a-11f0-8b53-f8fe5ef7d437', 4, '1547e3db-536a-11f0-8b53-f8fe5ef7d437', 2025),
 ('b4626091-536a-11f0-8b53-f8fe5ef7d437', 2, '0cc526c7-536a-11f0-8b53-f8fe5ef7d437', 2025),
-('bddb2865-536a-11f0-8b53-f8fe5ef7d437', 4, 'fec23f41-5369-11f0-8b53-f8fe5ef7d437', 2025),
+('bddb2865-536a-11f0-8b53-f8fe5ef7d437', 3, 'fec23f41-5369-11f0-8b53-f8fe5ef7d437', 2025),
 ('c9fb4fe1-536a-11f0-8b53-f8fe5ef7d437', 6, 'f8046db4-5369-11f0-8b53-f8fe5ef7d437', 2025),
 ('d23e33cf-536a-11f0-8b53-f8fe5ef7d437', 5, '52e26c37-536a-11f0-8b53-f8fe5ef7d437', 2025),
 ('ec33cc89-536a-11f0-8b53-f8fe5ef7d437', 4, '33088f6f-536a-11f0-8b53-f8fe5ef7d437', 2025),
@@ -161,15 +161,17 @@ CREATE TABLE `permintaan_anggaran` (
   `ppn` int(11) NOT NULL,
   `pajak_daerah` int(11) NOT NULL,
   `total` int(11) NOT NULL,
-  `status_npd` int(11) NOT NULL
+  `status_npd` int(11) NOT NULL,
+  `catatan_npd` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `permintaan_anggaran`
 --
 
-INSERT INTO `permintaan_anggaran` (`id_permintaan_anggaran`, `tgl_permintaan_anggaran`, `kegiatan`, `sub_kegiatan`, `program`, `no_dpa`, `tahun_anggaran`, `status_permintaan`, `id_rek_05`, `id_rek_06`, `id_akun`, `file`, `tgl_input`, `catatan`, `dokumen`, `status_pptk`, `status_kpa`, `status_ppkeu`, `status_bend`, `id_jenis_npd`, `ppn`, `pajak_daerah`, `total`, `status_npd`) VALUES
-('cf94767a-53f3-11f0-8b53-f8fe5ef7d437', '2025-06-28', 'Pelaksanaan Kebijakan Perekonomian', 'Koordinasi, Sinkronisasi dan Evaluasi Kebijakan Pengelolaan BUMD dan BLUD     ', 'Program Perekonomian dan Pembangunan', '4.01.03.2.04.0003', 2025, 4, '91f52979-5339-11f0-8b53-f8fe5ef7d437', '06d961c7-533b-11f0-8b53-f8fe5ef7d437', 'b4626091-536a-11f0-8b53-f8fe5ef7d437', '7c7ed28ee1b3ea7ce141d7c3b2e3ddfa.pdf', '2025-06-28 07:45:02', '', 'a33a10e777dc737bab4380cdbaf7e5b0.pdf', 1, 0, 0, 0, 'be215365-5418-11f0-8b53-f8fe5ef7d437', 2, 10, 200000, 1);
+INSERT INTO `permintaan_anggaran` (`id_permintaan_anggaran`, `tgl_permintaan_anggaran`, `kegiatan`, `sub_kegiatan`, `program`, `no_dpa`, `tahun_anggaran`, `status_permintaan`, `id_rek_05`, `id_rek_06`, `id_akun`, `file`, `tgl_input`, `catatan`, `dokumen`, `status_pptk`, `status_kpa`, `status_ppkeu`, `status_bend`, `id_jenis_npd`, `ppn`, `pajak_daerah`, `total`, `status_npd`, `catatan_npd`) VALUES
+('032957d9-5589-11f0-83ec-c454445434d3', '2025-06-30', 'Pelaksanaan Kebijakan Perekonomian', 'Koordinasi, Sinkronisasi dan Evaluasi Kebijakan Pengelolaan BUMD dan BLUD     ', 'Program Perekonomian dan Pembangunans', '4.01.03.2.04.0003', 2025, 4, '91f52979-5339-11f0-8b53-f8fe5ef7d437', '06d961c7-533b-11f0-8b53-f8fe5ef7d437', 'b4626091-536a-11f0-8b53-f8fe5ef7d437', '97b160d96cb279cc93667852ca6427c3.pdf', '2025-06-30 08:05:40', '', '', 2, 1, 0, 0, 'b74f66bb-5418-11f0-8b53-f8fe5ef7d437', 0, 0, 0, 1, ''),
+('cf94767a-53f3-11f0-8b53-f8fe5ef7d437', '2025-06-28', 'Pelaksanaan Kebijakan Perekonomian', 'Koordinasi, Sinkronisasi dan Evaluasi Kebijakan Pengelolaan BUMD dan BLUD     ', 'Program Perekonomian dan Pembangunan', '4.01.03.2.04.0003', 2025, 4, '91f52979-5339-11f0-8b53-f8fe5ef7d437', '06d961c7-533b-11f0-8b53-f8fe5ef7d437', 'b4626091-536a-11f0-8b53-f8fe5ef7d437', '7c7ed28ee1b3ea7ce141d7c3b2e3ddfa.pdf', '2025-06-28 07:45:02', '', 'a33a10e777dc737bab4380cdbaf7e5b0.pdf', 2, 1, 0, 0, 'be215365-5418-11f0-8b53-f8fe5ef7d437', 2, 10, 200000, 1, '');
 
 -- --------------------------------------------------------
 

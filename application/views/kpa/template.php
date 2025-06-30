@@ -60,15 +60,15 @@
                   </div>
                </div>
                <div class="sidebar_blog_2">
-                  <h4>PPTK</h4>
+                  <h4>KPA</h4>
                   <ul class="list-unstyled components">
                    
-                     <li><a href="<?= base_url('pptk');?>"><i class="fa fa-home red_color"></i> <span>Home</span></a></li>
-                      <!--  <li><a href="<?= base_url('pptk/role');?>"><i class="fa fa-briefcase orange_color"></i> <span>Role</span></a></li> -->
+                     <li><a href="<?= base_url('kpa');?>"><i class="fa fa-home red_color"></i> <span>Home</span></a></li>
+                      <!--  <li><a href="<?= base_url('kpa/role');?>"><i class="fa fa-briefcase orange_color"></i> <span>Role</span></a></li> -->
                         
                       
-                      <li><a href="<?= base_url('pptk/permintaan_anggaran');?>"><i class="fa fa-file blue1_color"></i> <span>Permintaan Anggaran</span></a></li>
-                         <li><a href="<?= base_url('pptk/npd');?>"><i class="fa fa-file orange_color"></i> <span>NPD</span></a></li>
+                      
+                         <li><a href="<?= base_url('kpa/npd');?>"><i class="fa fa-file orange_color"></i> <span>NPD</span></a></li>
 
                      <li>
                      <li>

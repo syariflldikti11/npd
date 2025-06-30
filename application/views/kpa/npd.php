@@ -20,6 +20,7 @@
         <thead>
             <tr>
                 <th>No</th>
+                <th>Tracking</th>
                 <th>Status</th>
                 <th>Jenis NPD</th>
                 <th>Tanggal</th>
@@ -53,6 +54,8 @@
          
           > 
  <i class="fa fa-search"></i></a></td>
+ <td> <?php if($d->status_kpa==1) :?><span class="badge badge-danger">Belum Diperiksa</span><?php endif; ?>
+                       <?php if($d->status_kpa==2) :?><span class="badge badge-success"> Sudah Divalidasi</span><?php endif; ?></td>
                 <td><?= $d->nama_jenis_npd; ?></td>
                 <td><?= $d->tgl_permintaan_anggaran; ?></td>
                 <td><?= $d->program; ?></td>
@@ -66,17 +69,20 @@
           <td>  <a  target="_blank" href="<?= base_url();?>upload/<?= $d->file; ?>"><i class="fa fa-file"></i></a> </td>
              
                 <td>
-                  <?php if($d->status_npd==0 or $d->status_npd==2 ) :?> <a  class="btn  btn-success btn-sm" data-tooltip="tooltip"
+                <?php if($d->status_kpa==1) :?><a class="btn  btn-success btn-sm"  data-tooltip="tooltip"
   data-placement="top"
-  title="Kirim" 
-onclick="return confirm('ajukan NPD ? data tidak bisa dirubah lagi')"
-href="<?php echo base_url('kasubbag/kirim_npd/'.$d->id_permintaan_anggaran);?>" 
-> <i class="fa fa-paper-plane-o"></i></a> <a  class="btn  btn-dark btn-sm" data-tooltip="tooltip"
+  title="Validasi" href="javascript:;"
+       data-toggle="modal" data-target="#edit"   
+          data-id="<?= $d->id_permintaan_anggaran ?>"
+
+         
+          > 
+ <i class="fa fa-check"></i></a> <?php endif; ?><a  class="btn  btn-dark btn-sm" data-tooltip="tooltip"
   data-placement="top"
   title="Detail NPD" 
 
-href="<?php echo base_url('kasubbag/rincian_npd/'.$d->id_permintaan_anggaran);?>" 
-> <i class="fa fa-list"></i></a> <?php endif; ?></td>
+href="<?php echo base_url('kpa/rincian_npd/'.$d->id_permintaan_anggaran);?>" 
+> <i class="fa fa-list"></i></a></td>
             </tr>
           <?php endforeach; ?>
         </tbody>
@@ -135,3 +141,61 @@ BENDAHARA : <?php if($f->status_bend==1) :?><span class="badge badge-primary"> D
 </div>
 
 <?php endforeach; ?>
+
+   <div class="modal fade" id="edit" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+
+<!-- Modal Header -->
+<div class="modal-header">
+<h4 class="modal-title">Validasi NPD</h4>
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+<?php  
+echo validation_errors();                       
+echo form_open('kpa/validasi_npd'); ?>
+
+<!-- Modal body -->
+<div class="modal-body">
+<div class="mb-3">
+<input type="hidden" class="form-control"  name="id_permintaan_anggaran" id="id" required >
+    <label for="exampleInputEmail1">Status</label>
+<select class="form-control" name="status">
+  <option value="1">Setuju</option>
+  <option value="2">Kembalikan</option>
+</select>
+    
+  </div>
+ <div class="mb-3">
+
+    <label for="exampleInputEmail1">Catatan</label>
+    <input type="text" class="form-control"  name="catatan_npd"  placeholder="Hanya diisi jika dikembalikan" >
+    
+  </div>
+
+</div>
+
+<!-- Modal footer -->
+<div class="modal-footer">
+
+<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+<input type="submit" name="submit"  class="btn btn-info btn-pill" value="Update">
+
+</div>
+</form>
+</div>
+</div>
+</div>
+
+<script>
+$(document).ready(function() {
+
+$('#edit').on('show.bs.modal', function (event) {
+var div = $(event.relatedTarget)
+var modal   = $(this)
+modal.find('#id').attr("value",div.data('id'));
+
+
+});
+});
+</script>

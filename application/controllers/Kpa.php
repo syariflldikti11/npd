@@ -1,12 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Pptk extends CI_Controller {
+class Kpa extends CI_Controller {
 function __construct(){
     parent::__construct();
     $this->load->database();
        $this->load->library('uuid'); // Memuat library UUID
-    if($this->session->userdata('akses') <> 6){
+    if($this->session->userdata('akses') <> 3){
         redirect(base_url('login'));
         }
   }
@@ -19,7 +19,7 @@ function __construct(){
 
         );
          
-        $this->template->load('pptk/template', 'pptk/home', $data);
+        $this->template->load('kpa/template', 'kpa/home', $data);
     }
  function permintaan_anggaran()
     {
@@ -30,7 +30,7 @@ function __construct(){
             
 
         );
-        $this->template->load('pptk/template', 'pptk/permintaan_anggaran', $data);
+        $this->template->load('kpa/template', 'kpa/permintaan_anggaran', $data);
     }
 
         function npd()
@@ -42,7 +42,7 @@ function __construct(){
             
 
         );
-        $this->template->load('pptk/template', 'pptk/npd', $data);
+        $this->template->load('kpa/template', 'kpa/npd', $data);
     }
     function kirim_npd($id)
     {
@@ -51,23 +51,23 @@ $sql11 = "update permintaan_anggaran set status_npd=1, status_pptk=1 where id_pe
                         
             $notif = "NPD berhasil terkirim";
             $this->session->set_flashdata('update', $notif);
-            redirect('pptk/npd');
+            redirect('kpa/npd');
         }
           function validasi_npd()
     {
          $id_permintaan_anggaran=$this->input->post('id_permintaan_anggaran');
          $status=$this->input->post('status');
-         $catatan_npd=$this->input->post('catatan_npd');
+                $catatan_npd=$this->input->post('catatan_npd');
          if($status==1){
-         $sql11 = "update permintaan_anggaran set status_pptk=2, status_kpa=1 where id_permintaan_anggaran='$id_permintaan_anggaran'";
+         $sql11 = "update permintaan_anggaran set status_kpa=2, status_ppkeu=1 where id_permintaan_anggaran='$id_permintaan_anggaran'";
          $this->db->query($sql11);        }
          else{
-              $sql11 = "update permintaan_anggaran set status_pptk=3, status_npd=0, catatan_npd='$catatan_npd' where id_permintaan_anggaran='$id_permintaan_anggaran'";
+              $sql11 = "update permintaan_anggaran set status_kpa=3, status_npd=0,status_pptk=0, catatan_npd='$catatan_npd' where id_permintaan_anggaran='$id_permintaan_anggaran'";
          $this->db->query($sql11); 
          }       
             $notif = "NPD berhasil divalidasi";
             $this->session->set_flashdata('update', $notif);
-            redirect('pptk/npd');
+            redirect('kpa/npd');
         }
                function validasi_permintaan_anggaran()
     {
@@ -82,7 +82,7 @@ $sql11 = "update permintaan_anggaran set status_npd=1, status_pptk=1 where id_pe
              
             $notif = "Permintaan Anggaran berhasil divalidasi";
             $this->session->set_flashdata('update', $notif);
-            redirect('pptk/permintaan_anggaran');
+            redirect('kpa/permintaan_anggaran');
         }
      function rincian_npd($id)
     {
@@ -93,7 +93,7 @@ $sql11 = "update permintaan_anggaran set status_npd=1, status_pptk=1 where id_pe
             'dt_rincian_npd' => $this->m_umum->get_rincian_npd($id),
             'y' => $this->m_umum->get_npd_cetak($id),
         );
-        $this->template->load('pptk/template', 'pptk/rincian_npd', $data);
+        $this->template->load('kpa/template', 'kpa/rincian_npd', $data);
     }
   
 

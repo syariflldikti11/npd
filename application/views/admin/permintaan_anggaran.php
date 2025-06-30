@@ -2,7 +2,7 @@
    <div class="row column_title">
                         <div class="col-md-12">
                            <div class="page_title">
-                              <h2>Sistem Informasi Nota Pencairan Dana (<?= $this->session->userdata('ses_bag'); ?> <?= $this->session->userdata('tahun'); ?>)</h2>
+                              <h2>Sistem Informasi Nota Pencairan Dana (<?= $this->session->userdata('tahun'); ?>)</h2>
                            </div>
                         </div>
                      </div>
@@ -11,13 +11,7 @@
                            <div class="white_shd full margin_bottom_30">
                               <div class="full graph_head">
                                  <div class="heading1 margin_0">
-                                    <h2><?= $judul; ?>  <button
-                        class="btn btn-primary btn-round ms-auto"
-                   data-toggle="modal" data-target="#add" 
-                      >
-                        <i class="fa fa-plus"></i>
-                        Tambah
-                      </button></h2>
+                                    <h2><?= $judul; ?></h2>
                                  </div>
                               </div>
                               <div class="table_section padding_infor_info">
@@ -74,7 +68,7 @@
   data-placement="top"
   title="Delete" 
 onclick="return confirm('anda yakin ingin menghapus data ini')"
-href="<?php echo base_url('kasubbag/delete_permintaan_anggaran/'.$d->id_permintaan_anggaran);?>" 
+href="<?php echo base_url('admin/delete_permintaan_anggaran/'.$d->id_permintaan_anggaran);?>" 
 > <i class="fa fa-trash"></i></a> <a class="btn  btn-primary btn-sm"  data-tooltip="tooltip"
   data-placement="top"
   title="Edit" href="javascript:;"
@@ -85,7 +79,7 @@ href="<?php echo base_url('kasubbag/delete_permintaan_anggaran/'.$d->id_perminta
   data-placement="top"
   title="Kirim" 
 onclick="return confirm('ajukan permintaan ? data tidak bisa dirubah lagi')"
-href="<?php echo base_url('kasubbag/kirim_permintaan_anggaran/'.$d->id_permintaan_anggaran);?>" 
+href="<?php echo base_url('admin/kirim_permintaan_anggaran/'.$d->id_permintaan_anggaran);?>" 
 > <i class="fa fa-paper-plane-o"></i></a><?php endif; ?></td>
             </tr>
           <?php endforeach; ?>
@@ -111,7 +105,7 @@ href="<?php echo base_url('kasubbag/kirim_permintaan_anggaran/'.$d->id_permintaa
 </div>
 <?php  
 echo validation_errors();                       
-echo form_open_multipart('kasubbag/tambah_permintaan_anggaran'); ?>
+echo form_open_multipart('admin/tambah_permintaan_anggaran'); ?>
 
 <!-- Modal body -->
 <div class="modal-body">
@@ -218,7 +212,7 @@ echo form_open_multipart('kasubbag/tambah_permintaan_anggaran'); ?>
       </div>
 <?php  
              echo validation_errors();                       
-    echo form_open_multipart('kasubbag/update_permintaan_anggaran'); ?>
+    echo form_open_multipart('admin/update_permintaan_anggaran'); ?>
                    
       <!-- Modal body -->
       <div class="modal-body">
@@ -316,7 +310,7 @@ $(document).ready(function(){
   $('#rek_05').change(function(){
     var id_rek_05 = $(this).val();
     $.ajax({
-      url: "<?= base_url('kasubbag/get_rek_06'); ?>",
+      url: "<?= base_url('admin/get_rek_06'); ?>",
       method: "POST",
       data: {id_rek_05: id_rek_05},
       success: function(data){
@@ -335,7 +329,7 @@ $(document).ready(function(){
   $('#rek_005').change(function(){
     var id_rek_05 = $(this).val();
     $.ajax({
-      url: "<?= base_url('kasubbag/get_rek_06'); ?>",
+      url: "<?= base_url('admin/get_rek_06'); ?>",
       method: "POST",
       data: {id_rek_05: id_rek_05},
       success: function(data){

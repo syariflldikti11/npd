@@ -71,8 +71,8 @@
                          <li><a href="<?= base_url('admin/pegawai');?>"><i class="fa fa-briefcase blue1_color"></i> <span>Pegawai</span></a></li>
                          <li><a href="<?= base_url('admin/rek_05');?>"><i class="fa fa-briefcase orange_color"></i> <span>Kode Rekening</span></a></li>
                        
-                         <li><a href="<?= base_url();?>assets/price.html"><i class="fa fa-file yellow_color"></i> <span>Permintaan Anggaran</span></a></li>
-                         <li><a href="<?= base_url();?>assets/price.html"><i class="fa fa-file red_color"></i> <span>NPD</span></a></li>
+                         <li><a href="<?= base_url('admin/permintaan_anggaran');?>"><i class="fa fa-file yellow_color"></i> <span>Permintaan Anggaran</span></a></li>
+                         <li><a href="<?= base_url('admin/npd');?>"><i class="fa fa-file red_color"></i> <span>NPD</span></a></li>
 
                      <li>
                      <li>

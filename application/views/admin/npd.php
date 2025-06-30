@@ -2,7 +2,7 @@
    <div class="row column_title">
                         <div class="col-md-12">
                            <div class="page_title">
-                              <h2>Sistem Informasi Nota Pencairan Dana (<?= $this->session->userdata('ses_bag'); ?> <?= $this->session->userdata('tahun'); ?>)</h2>
+                              <h2>Sistem Informasi Nota Pencairan Dana (<?= $this->session->userdata('tahun'); ?>)</h2>
                            </div>
                         </div>
                      </div>
@@ -70,12 +70,12 @@
   data-placement="top"
   title="Kirim" 
 onclick="return confirm('ajukan NPD ? data tidak bisa dirubah lagi')"
-href="<?php echo base_url('kasubbag/kirim_npd/'.$d->id_permintaan_anggaran);?>" 
+href="<?php echo base_url('admin/kirim_npd/'.$d->id_permintaan_anggaran);?>" 
 > <i class="fa fa-paper-plane-o"></i></a> <a  class="btn  btn-dark btn-sm" data-tooltip="tooltip"
   data-placement="top"
   title="Detail NPD" 
 
-href="<?php echo base_url('kasubbag/rincian_npd/'.$d->id_permintaan_anggaran);?>" 
+href="<?php echo base_url('admin/rincian_npd/'.$d->id_permintaan_anggaran);?>" 
 > <i class="fa fa-list"></i></a> <?php endif; ?></td>
             </tr>
           <?php endforeach; ?>
