@@ -33,6 +33,18 @@ function __construct(){
         );
         $this->template->load('kasubbag/template', 'kasubbag/npd', $data);
     }
+        function cetak_npd($id)
+    {
+        $data = array(
+            'judul' => 'Data NPD',
+           'dt_rincian_npd' => $this->m_umum->get_rincian_npd($id),
+            'y' => $this->m_umum->get_npd_cetak($id),
+      
+            
+
+        );
+        $this->load->view('laporan/cetak_npd', $data);
+    }
     function kirim_npd($id)
     {
 $sql11 = "update permintaan_anggaran set status_npd=1, status_pptk=1 where id_permintaan_anggaran='$id'";
@@ -86,6 +98,7 @@ $sql11 = "update permintaan_anggaran set status_npd=1, status_pptk=1 where id_pe
        $data_update = array(
       'ppn' => $this->input->post('ppn'),
       'pajak_daerah' => $this->input->post('pajak_daerah'),
+      'no_npd' => $this->input->post('no_npd'),
      
       'dokumen' => $dokumen,
    

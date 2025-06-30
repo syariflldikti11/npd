@@ -39,6 +39,12 @@ function rupiah($angka){
 echo validation_errors();                       
 echo form_open_multipart('kasubbag/update_potongan'); ?>
  <input type="hidden" class="form-control"  name="id_permintaan_anggaran" value="<?= $id; ?>"  required >
+  <div class="mb-3">
+
+    <label for="exampleInputEmail1">No NPD</label>
+    <input type="text" class="form-control" value="<?= $y->no_npd; ?>"  name="no_npd"  required >
+    
+  </div>
                                 <div class="mb-3">
 
     <label for="exampleInputEmail1">Persentasi PPN</label>

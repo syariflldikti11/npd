@@ -20,8 +20,9 @@
         <thead>
             <tr>
                 <th>No</th>
-                <th>Tracking</th>
+                <th>Opsi</th>
                 <th>Status</th>
+                <th>No NPD</th>
                 <th>Jenis NPD</th>
                 <th>Tanggal</th>
                   <th>Program</th>
@@ -33,10 +34,7 @@
                 <th>Rek 05</th>
                 <th>Rek 06</th>
                 <th>RAB</th>
-             
-               
-               
-                <th>Opsi</th>
+       
             </tr>
         </thead>
         <tbody>
@@ -47,15 +45,30 @@
             <tr>
                 <td><?= $no++; ?></td>
                  <td>
+                     <?php if($d->status_pptk==1) :?><a class="btn  btn-success btn-sm"  data-tooltip="tooltip"
+  data-placement="top"
+  title="Validasi" href="javascript:;"
+       data-toggle="modal" data-target="#edit"   
+          data-id="<?= $d->id_permintaan_anggaran ?>"
+
+         
+          > 
+ <i class="fa fa-check"></i></a> <?php endif; ?><a  class="btn  btn-info btn-sm" data-tooltip="tooltip"
+  data-placement="top"
+  title="Detail NPD" 
+
+href="<?php echo base_url('pptk/rincian_npd/'.$d->id_permintaan_anggaran);?>" 
+> <i class="fa fa-list"></i></a>
                      <a class="btn  btn-dark btn-sm"  data-tooltip="tooltip"
   data-placement="top"
-  title="Edit" href="javascript:;"
+  title="Tracking" href="javascript:;"
        data-toggle="modal" data-target="#search<?= $d->id_permintaan_anggaran ?>"
          
           > 
  <i class="fa fa-search"></i></a></td>
  <td> <?php if($d->status_pptk==1) :?><span class="badge badge-danger">Belum Diperiksa</span><?php endif; ?>
                        <?php if($d->status_pptk==2) :?><span class="badge badge-success"> Sudah Divalidasi</span><?php endif; ?></td>
+                        <td><?= $d->no_npd; ?></td>
                 <td><?= $d->nama_jenis_npd; ?></td>
                 <td><?= $d->tgl_permintaan_anggaran; ?></td>
                 <td><?= $d->program; ?></td>
@@ -68,21 +81,7 @@
                 <td><?= $d->no_rek_06; ?> | <?= $d->nama_rek_06; ?></td>
           <td>  <a  target="_blank" href="<?= base_url();?>upload/<?= $d->file; ?>"><i class="fa fa-file"></i></a> </td>
              
-                <td>
-                <?php if($d->status_pptk==1) :?><a class="btn  btn-success btn-sm"  data-tooltip="tooltip"
-  data-placement="top"
-  title="Validasi" href="javascript:;"
-       data-toggle="modal" data-target="#edit"   
-          data-id="<?= $d->id_permintaan_anggaran ?>"
-
-         
-          > 
- <i class="fa fa-check"></i></a> <?php endif; ?><a  class="btn  btn-dark btn-sm" data-tooltip="tooltip"
-  data-placement="top"
-  title="Detail NPD" 
-
-href="<?php echo base_url('pptk/rincian_npd/'.$d->id_permintaan_anggaran);?>" 
-> <i class="fa fa-list"></i></a></td>
+             
             </tr>
           <?php endforeach; ?>
         </tbody>

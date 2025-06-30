@@ -25,7 +25,7 @@ class Login extends CI_Controller{
             redirect(site_url('bendahara'));
         }
          if ($akses == 5) {
-            redirect(site_url('ppk'));
+            redirect(site_url('ppkeu'));
         }
       
          else {
@@ -88,7 +88,7 @@ class Login extends CI_Controller{
                     redirect('kpa/index');
                  }
                   if($data['id_role']=='4' && password_verify($password, $data['password'])){ 
-                    $this->session->set_userdata('akses','3');
+                    $this->session->set_userdata('akses','4');
                        $this->session->set_userdata('ses_id',$data['id_akun']);
                        $this->session->set_userdata('ses_nama',$data['nama_pegawai']);
                        $this->session->set_userdata('ses_bag',$data['nama_bagian']);
@@ -98,14 +98,14 @@ class Login extends CI_Controller{
                     redirect('bendahara/index');
                  }
                   if($data['id_role']=='5' && password_verify($password, $data['password'])){ 
-                    $this->session->set_userdata('akses','3');
+                    $this->session->set_userdata('akses','5');
                        $this->session->set_userdata('ses_id',$data['id_akun']);
                        $this->session->set_userdata('ses_nama',$data['nama_pegawai']);
                        $this->session->set_userdata('ses_bag',$data['nama_bagian']);
                          $this->session->set_userdata('tahun',$tahun);
                          $this->session->set_userdata('ses_id_bag',$data['id_bag']);
                               $this->session->set_userdata('tahun_akun',$data['tahun_akun']);
-                    redirect('ppk/index');
+                    redirect('ppkeu/index');
                  }
                  
              
