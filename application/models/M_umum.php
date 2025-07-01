@@ -96,6 +96,42 @@ function hitung($tabel){
     else
       return (TRUE);
   }
+   public function get_laporan_program() {
+        $this->db->select('
+            program.nama_program, 
+            program.kode_program, 
+            kegiatan.nama_kegiatan, 
+            kegiatan.kode_kegiatan, 
+            sub_kegiatan.nama_sub_kegiatan,
+            sub_kegiatan.kode_sub_kegiatan
+        ');
+        $this->db->from('program');
+        $this->db->join('kegiatan', 'kegiatan.id_program = program.id_program');
+        $this->db->join('sub_kegiatan', 'sub_kegiatan.id_kegiatan = kegiatan.id_kegiatan');
+        $this->db->order_by('program.nama_program');
+        $this->db->order_by('kegiatan.nama_kegiatan');
+        $this->db->order_by('sub_kegiatan.nama_sub_kegiatan');
+
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+    public function get_laporan_rekening() {
+        $this->db->select('
+            rek_05.nama_rek_05, 
+            rek_05.no_rek_05, 
+            rek_06.nama_rek_06, 
+            rek_06.no_rek_06,
+           
+        ');
+        $this->db->from('rek_05');
+        $this->db->join('rek_06', 'rek_06.id_rek_05 = rek_05.id_rek_05');
+       
+        $this->db->order_by('rek_05.nama_rek_05');
+        $this->db->order_by('rek_06.nama_rek_06');
+
+        $query = $this->db->get();
+        return $query->result_array();
+    }
   function get_akun()
   {   
      
@@ -142,6 +178,64 @@ function hitung($tabel){
         $this->db->where('a.tahun_anggaran',$tahun);
     $this->db->order_by('a.tgl_input desc');
       
+     $query = $this->db->get();
+     return $query->result(); 
+    }
+    function laporan_permintaan_anggaran($id_bagian,$id_jenis_npd,$status_permintaan,$dari,$sampai)
+  {   
+    $id=$this->session->userdata('ses_id');
+    $tahun=$this->session->userdata('tahun');
+    $this->db->select('*');
+      $this->db->from('permintaan_anggaran a');
+    $this->db->join('jenis_npd e','a.id_jenis_npd=e.id_jenis_npd','left');
+    $this->db->join('akun b','a.id_akun=b.id_akun','left');
+     $this->db->join('pegawai f','f.id_pegawai=b.id_pegawai','left');
+      $this->db->join('bagian g','f.id_bagian=g.id_bagian','left');
+    $this->db->join('rek_05 d','a.id_rek_05=d.id_rek_05','left');
+    $this->db->join('rek_06 c','a.id_rek_06=c.id_rek_06','left');
+     $this->db->where('a.tgl_permintaan_anggaran between "'.$dari.'" and "'.$sampai.'"'); 
+            $this->db->where('a.id_jenis_npd '.$id_jenis_npd.'');
+            $this->db->where('f.id_bagian '.$id_bagian.'');
+
+            $this->db->where('a.status_permintaan '.$status_permintaan.'');
+        $this->db->where('a.tahun_anggaran',$tahun);
+    $this->db->order_by('a.tgl_input desc');
+      
+     $query = $this->db->get();
+     return $query->result(); 
+    }
+    function laporan_npd($id_bagian,$id_jenis_npd,$dari,$sampai)
+  {   
+    $id=$this->session->userdata('ses_id');
+    $tahun=$this->session->userdata('tahun');
+    $this->db->select('*');
+      $this->db->from('permintaan_anggaran a');
+    $this->db->join('jenis_npd e','a.id_jenis_npd=e.id_jenis_npd','left');
+    $this->db->join('akun b','a.id_akun=b.id_akun','left');
+         $this->db->join('pegawai f','f.id_pegawai=b.id_pegawai','left');
+          $this->db->join('bagian g','f.id_bagian=g.id_bagian','left');
+    $this->db->join('rek_05 d','a.id_rek_05=d.id_rek_05','left');
+    $this->db->join('rek_06 c','a.id_rek_06=c.id_rek_06','left');
+     $this->db->where('a.tgl_permintaan_anggaran between "'.$dari.'" and "'.$sampai.'"'); 
+            $this->db->where('a.id_jenis_npd '.$id_jenis_npd.'');
+           $this->db->where('f.id_bagian '.$id_bagian.'');
+        $this->db->where('a.tahun_anggaran',$tahun);
+    $this->db->order_by('a.tgl_input desc');
+      
+     $query = $this->db->get();
+     return $query->result(); 
+    }
+     function laporan_transaksi($id_pelanggan,$status,$status_payment,$dari,$sampai)
+  {   
+     $tahun=$this->session->userdata('tahun'); 
+    $this->db->select('*');
+       $this->db->from('transaksi a');
+    $this->db->join('pelanggan b','a.id_pelanggan=b.id_pelanggan','left');
+      $this->db->where('a.tgl_transaksi between "'.$dari.'" and "'.$sampai.'"'); 
+       $this->db->where('a.id_pelanggan '.$id_pelanggan.'');   
+       $this->db->where('a.status_payment '.$status_payment.'');   
+       $this->db->where('a.status '.$status.'');   
+         $this->db->order_by('a.tgl_input desc');
      $query = $this->db->get();
      return $query->result(); 
     }

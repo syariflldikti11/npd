@@ -166,6 +166,9 @@ function delete_rincian_npd($id=NULL,$id_rek)
             'judul' => 'Data Permintaan Anggaran',
             'dt_permintaan_anggaran' => $this->m_umum->get_permintaan_anggaran(),
             'dt_rek_05' => $this->m_umum->get_data('rek_05'),
+            'dt_program' => $this->m_umum->get_data('program'),
+            'dt_kegiatan' => $this->m_umum->get_data('kegiatan'),
+            'dt_sub_kegiatan' => $this->m_umum->get_data('sub_kegiatan'),
             'dt_jenis_npd' => $this->m_umum->get_data('jenis_npd'),
             
 
@@ -253,6 +256,24 @@ $tahun=$this->session->userdata('tahun');
   echo '<option value="">Pilih Rek 06</option>';
   foreach ($rek_06 as $k) {
     echo '<option value="'.$k->id_rek_06.'">'.$k->nama_rek_06.'</option>';
+  }
+}
+  public function get_kegiatan() {
+  $id_program = $this->input->post('id_program');
+  $kegiatan = $this->db->get_where('kegiatan', ['id_program' => $id_program])->result();
+
+  echo '<option value="">Pilih Kegiatan</option>';
+  foreach ($kegiatan as $kg) {
+    echo '<option value="'.$kg->id_kegiatan.'">'.$kg->kode_kegiatan.''.$kg->nama_kegiatan.'</option>';
+  }
+}
+public function get_sub_kegiatan() {
+  $id_kegiatan = $this->input->post('id_kegiatan');
+  $sub_kegiatan = $this->db->get_where('sub_kegiatan', ['id_kegiatan' => $id_kegiatan])->result();
+
+  echo '<option value="">Pilih Sub Kegiatan</option>';
+  foreach ($sub_kegiatan as $sk) {
+    echo '<option value="'.$sk->id_sub_kegiatan.'">'.$sk->kode_sub_kegiatan.''.$sk->nama_sub_kegiatan.'</option>';
   }
 }
  function kirim_permintaan_anggaran($id)

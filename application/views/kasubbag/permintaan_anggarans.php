@@ -144,7 +144,7 @@ echo form_open_multipart('kasubbag/tambah_permintaan_anggaran'); ?>
                   
                     foreach ($dt_program as $gh):
                     ?> 
-                       <option value="<?= $gh->nama_program; ?>"><?= $gh->kode_program; ?> <?= $gh->nama_program; ?></option>
+                       <option value="<?= $gh->id_program; ?>"><?= $gh->kode_program; ?> <?= $gh->nama_program; ?></option>
                   <?php endforeach; ?>
                         </select>
     
@@ -154,13 +154,7 @@ echo form_open_multipart('kasubbag/tambah_permintaan_anggaran'); ?>
     <label for="exampleInputEmail1">Kegiatan</label>
    <select class="form-control" name="kegiatan" id="kegiatan" required>
                            <option value="">Pilih Kegiatan</option>
-                           <?php 
-                  
-                    foreach ($dt_kegiatan as $gm):
-                    ?> 
-                       <option value="<?= $gm->nama_kegiatan; ?>"><?= $gm->kode_kegiatan; ?> <?= $gm->nama_kegiatan; ?></option>
-                  <?php endforeach; ?>
-                        </select>
+          </select>                
     
   </div>
   <div class="mb-3">
@@ -168,17 +162,16 @@ echo form_open_multipart('kasubbag/tambah_permintaan_anggaran'); ?>
     <label for="exampleInputEmail1">Sub Kegiatan</label>
    <select class="form-control" name="sub_kegiatan" id="sub_kegiatan" required>
                            <option value="">Pilih Sub Kegiatan</option>
-                           <?php 
-                  
-                    foreach ($dt_sub_kegiatan as $kj):
-                    ?> 
-                       <option value="<?= $kj->nama_sub_kegiatan; ?>"><?= $kj->kode_sub_kegiatan; ?> <?= $kj->nama_sub_kegiatan; ?></option>
-                  <?php endforeach; ?>
-                        </select>
+          </select>                
     
   </div>
 
+  <div class="mb-3">
 
+    <label for="exampleInputEmail1">Sub Kegiatan</label>
+    <input type="text" class="form-control"  name="sub_kegiatan" required >
+    
+  </div>
    
    <div class="mb-3">
 
@@ -270,49 +263,23 @@ echo form_open_multipart('kasubbag/tambah_permintaan_anggaran'); ?>
                         <input type="date" class="form-control" value="<?= $f->tgl_permintaan_anggaran; ?>" name="tgl_permintaan_anggaran" required >
                         
                       </div>
-     <div class="mb-3">
+       <div class="mb-3">
+                        <label for="exampleInputEmail1">Program</label>
+                        <input type="text" class="form-control" value="<?= $f->program; ?>" name="program" required >
+                        
+                      </div>
 
-    <label for="exampleInputEmail1">Program</label>
-   <select class="form-control" name="program" id="program" required>
-                           <option value="">Pilih Program</option>
-                           <?php 
-                  
-                    foreach ($dt_program as $gh):
-                    ?> 
-                       <option value="<?= $gh->nama_program; ?>" <?php if($gh->nama_program == $f->program) { echo 'selected'; } ?>><?= $gh->kode_program; ?> <?= $gh->nama_program; ?></option>
-                  <?php endforeach; ?>
-                        </select>
-    
-  </div>
-  <div class="mb-3">
+                         <div class="mb-3">
+                        <label for="exampleInputEmail1">Kegiatan</label>
+                        <input type="text" class="form-control" value="<?= $f->kegiatan; ?>" name="kegiatan" required >
+                        
+                      </div>
 
-    <label for="exampleInputEmail1">Kegiatan</label>
-   <select class="form-control" name="kegiatan" id="kegiatan" required>
-                           <option value="">Pilih Kegiatan</option>
-                           <?php 
-                  
-                    foreach ($dt_kegiatan as $kl):
-                    ?> 
-                       <option value="<?= $kl->nama_kegiatan; ?>" <?php if($kl->nama_kegiatan == $f->kegiatan) { echo 'selected'; } ?>><?= $kl->kode_kegiatan; ?> <?= $kl->nama_kegiatan; ?></option>
-                  <?php endforeach; ?>
-                        </select>
-    
-  </div>
-  <div class="mb-3">
-
-    <label for="exampleInputEmail1">Sub Kegiatan</label>
-   <select class="form-control" name="sub_kegiatan" id="sub_kegiatan" required>
-                           <option value="">Pilih Sub Kegiatan</option>
-                           <?php 
-                  
-                    foreach ($dt_sub_kegiatan as $on):
-                    ?> 
-                       <option value="<?= $on->nama_sub_kegiatan; ?>" <?php if($on->nama_sub_kegiatan == $f->sub_kegiatan) { echo 'selected'; } ?>><?= $on->kode_sub_kegiatan; ?> <?= $on->nama_sub_kegiatan; ?></option>
-                  <?php endforeach; ?>
-                        </select>
-    
-  </div>
-
+                       <div class="mb-3">
+                        <label for="exampleInputEmail1">Sub Kegiatan</label>
+                        <input type="text" class="form-control" value="<?= $f->sub_kegiatan; ?>" name="sub_kegiatan" required >
+                        
+                      </div>
                      
                    <div class="mb-3">
 
@@ -372,6 +339,42 @@ $(document).ready(function(){
       data: {id_rek_05: id_rek_05},
       success: function(data){
         $('#rek_06').html(data); // data berupa HTML <option>
+      },
+      error: function(xhr, status, error){
+        alert("AJAX Error: " + status + " - " + error);
+      }
+    });
+  });
+});
+</script>
+<script>
+$(document).ready(function(){
+  $('#program').change(function(){
+    var id_program = $(this).val();
+    $.ajax({
+      url: "<?= base_url('kasubbag/get_kegiatan'); ?>",
+      method: "POST",
+      data: {id_program: id_program},
+      success: function(data){
+        $('#kegiatan').html(data); // data berupa HTML <option>
+      },
+      error: function(xhr, status, error){
+        alert("AJAX Error: " + status + " - " + error);
+      }
+    });
+  });
+});
+</script>
+<script>
+$(document).ready(function(){
+  $('#kegiatan').change(function(){
+    var id_kegiatan = $(this).val();
+    $.ajax({
+      url: "<?= base_url('kasubbag/get_sub_kegiatan'); ?>",
+      method: "POST",
+      data: {id_kegiatan: id_kegiatan},
+      success: function(data){
+        $('#sub_kegiatan').html(data); // data berupa HTML <option>
       },
       error: function(xhr, status, error){
         alert("AJAX Error: " + status + " - " + error);
