@@ -10,6 +10,17 @@ function __construct(){
         redirect(base_url('login'));
         }
   }
+     function ganti_password()
+    {
+        $id_pegawai = $this->input->post('id_pegawai');
+        $password = $this->input->post('password');
+        $password_hash = password_hash($password, PASSWORD_DEFAULT);
+    $this->db->query("UPDATE pegawai SET password=? WHERE id_pegawai=?", array($password_hash, $id_pegawai));
+            $notif = "Ganti Password Berhasil";
+            $this->session->set_flashdata('update', $notif);
+            redirect('kasubbag/index');
+        
+    }
   function index()
     {
         $data = array(
@@ -39,6 +50,8 @@ function __construct(){
             'judul' => 'Data NPD',
            'dt_rincian_npd' => $this->m_umum->get_rincian_npd($id),
             'y' => $this->m_umum->get_npd_cetak($id),
+            't' => $this->m_umum->get_ttd_kpa(),
+            'r' => $this->m_umum->get_ttd_pptk(),
       
             
 

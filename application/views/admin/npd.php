@@ -20,7 +20,8 @@
         <thead>
             <tr>
                 <th>No</th>
-                <th>Status</th>
+                <th>Opsi</th>
+                <th>No NPD</th>
                 <th>Jenis NPD</th>
                 <th>Tanggal</th>
                   <th>Program</th>
@@ -35,7 +36,7 @@
              
                
                
-                <th>Opsi</th>
+            
             </tr>
         </thead>
         <tbody>
@@ -45,14 +46,31 @@
                     ?> 
             <tr>
                 <td><?= $no++; ?></td>
-                 <td>
+                 <td> <a  class="btn  btn-success btn-sm" data-tooltip="tooltip"
+  data-placement="top"
+  title="Kirim" 
+onclick="return confirm('ajukan NPD ? data tidak bisa dirubah lagi')"
+href="<?php echo base_url('admin/kirim_npd/'.$d->id_permintaan_anggaran);?>" 
+> <i class="fa fa-paper-plane-o"></i></a> <a  class="btn  btn-info btn-sm" data-tooltip="tooltip"
+  data-placement="top"
+  title="Detail NPD" 
+
+href="<?php echo base_url('admin/rincian_npd/'.$d->id_permintaan_anggaran);?>" 
+> <i class="fa fa-list"></i></a>
                      <a class="btn  btn-dark btn-sm"  data-tooltip="tooltip"
   data-placement="top"
   title="Edit" href="javascript:;"
        data-toggle="modal" data-target="#search<?= $d->id_permintaan_anggaran ?>"
          
           > 
- <i class="fa fa-search"></i></a></td>
+ <i class="fa fa-search"></i></a>
+<?php if($d->status_kpa==2) :?><a  class="btn  btn-danger btn-sm" data-tooltip="tooltip"
+  data-placement="top"
+  title="Cetak NPD" 
+
+href="<?php echo base_url('admin/cetak_npd/'.$d->id_permintaan_anggaran);?>" 
+> <i class="fa fa-print"></i></a><?php endif; ?></td>
+   <td><?= $d->no_npd; ?></td>
                 <td><?= $d->nama_jenis_npd; ?></td>
                 <td><?= $d->tgl_permintaan_anggaran; ?></td>
                 <td><?= $d->program; ?></td>
@@ -65,18 +83,7 @@
                 <td><?= $d->no_rek_06; ?> | <?= $d->nama_rek_06; ?></td>
           <td>  <a  target="_blank" href="<?= base_url();?>upload/<?= $d->file; ?>"><i class="fa fa-file"></i></a> </td>
              
-                <td>
-                  <?php if($d->status_npd==0 or $d->status_npd==2 ) :?> <a  class="btn  btn-success btn-sm" data-tooltip="tooltip"
-  data-placement="top"
-  title="Kirim" 
-onclick="return confirm('ajukan NPD ? data tidak bisa dirubah lagi')"
-href="<?php echo base_url('admin/kirim_npd/'.$d->id_permintaan_anggaran);?>" 
-> <i class="fa fa-paper-plane-o"></i></a> <a  class="btn  btn-dark btn-sm" data-tooltip="tooltip"
-  data-placement="top"
-  title="Detail NPD" 
-
-href="<?php echo base_url('admin/rincian_npd/'.$d->id_permintaan_anggaran);?>" 
-> <i class="fa fa-list"></i></a> <?php endif; ?></td>
+              
             </tr>
           <?php endforeach; ?>
         </tbody>

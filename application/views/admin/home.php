@@ -16,8 +16,8 @@
                               </div>
                               <div class="counter_no">
                                  <div>
-                                    <p class="total_no">2500</p>
-                                    <p class="head_couter">Welcome</p>
+                                    <p class="total_no"><?= $jml_pegawai; ?></p>
+                                    <p class="head_couter">Pegawai</p>
                                  </div>
                               </div>
                            </div>

@@ -10,12 +10,36 @@ function __construct(){
         redirect(base_url('login'));
         }
   }
-  
+    function ganti_password()
+    {
+        $id_pegawai = $this->input->post('id_pegawai');
+        $password = $this->input->post('password');
+        $password_hash = password_hash($password, PASSWORD_DEFAULT);
+    $this->db->query("UPDATE pegawai SET password=? WHERE id_pegawai=?", array($password_hash, $id_pegawai));
+            $notif = "Ganti Password Berhasil";
+            $this->session->set_flashdata('update', $notif);
+            redirect('admin/index');
+        
+    }
+   function cetak_npd($id)
+    {
+        $data = array(
+            'judul' => 'Data NPD',
+           'dt_rincian_npd' => $this->m_umum->get_rincian_npd($id),
+            'y' => $this->m_umum->get_npd_cetak($id),
+            't' => $this->m_umum->get_ttd_kpa(),
+            'r' => $this->m_umum->get_ttd_pptk(),
+      
+            
+
+        );
+        $this->load->view('laporan/cetak_npd', $data);
+    }
   function index()
     {
         $data = array(
             'judul' => 'Dashboard',
-           
+           'jml_pegawai'=>$this->m_umum->hitung('pegawai'),
             
 
         );
@@ -218,6 +242,164 @@ function __construct(){
         $notif = "Data berhasil dihapuskan";
         $this->session->set_flashdata('delete', $notif);
         redirect('admin/role');
+    }
+     function program()
+    {
+        $data = array(
+            'judul' => 'Data Program',
+            'dt_program' => $this->m_umum->get_data('program'),
+
+        );
+        $this->template->load('admin/template', 'admin/program', $data);
+    }
+    function tambah_program()
+     {
+    $this->db->set('id_program', 'UUID()', FALSE);
+      
+        $this->form_validation->set_rules('nama_program', 'nama_program', 'required');
+
+        if ($this->form_validation->run() === FALSE)
+            $this->template->load('admin/template', 'admin/tambah_program');
+        else {
+
+            $this->m_umum->set_data("program");
+            $notif = "Tambah Data  Berhasil";
+            $this->session->set_flashdata('success', $notif);
+            redirect('admin/program');
+        }
+    }
+    function update_program($id=NULL)
+    {
+         $data = array(
+                'judul' => 'Update program',
+
+        );
+        $this->form_validation->set_rules('id_program', 'id_program', 'required');
+        $this->form_validation->set_rules('nama_program', 'nama_program', 'required');
+       
+        if ($this->form_validation->run() === FALSE)
+              redirect('admin/program');
+             
+        else {
+            $this->m_umum->update_data("program");
+            $notif = " Update data Berhasil";
+            $this->session->set_flashdata('update', $notif);
+            redirect('admin/program');
+        }
+    }
+    function delete_program($id)
+    {
+
+        $this->m_umum->hapus('program', 'id_program', $id);
+        $notif = "Data berhasil dihapuskan";
+        $this->session->set_flashdata('delete', $notif);
+        redirect('admin/program');
+    }
+     function kegiatan()
+    {
+        $data = array(
+            'judul' => 'Data kegiatan',
+            'dt_kegiatan' => $this->m_umum->get_kegiatan(),
+            'dt_program' => $this->m_umum->get_data('program'),
+
+        );
+        $this->template->load('admin/template', 'admin/kegiatan', $data);
+    }
+    function tambah_kegiatan()
+     {
+    $this->db->set('id_kegiatan', 'UUID()', FALSE);
+      
+        $this->form_validation->set_rules('nama_kegiatan', 'nama_kegiatan', 'required');
+
+        if ($this->form_validation->run() === FALSE)
+            $this->template->load('admin/template', 'admin/tambah_kegiatan');
+        else {
+
+            $this->m_umum->set_data("kegiatan");
+            $notif = "Tambah Data  Berhasil";
+            $this->session->set_flashdata('success', $notif);
+            redirect('admin/kegiatan');
+        }
+    }
+    function update_kegiatan($id=NULL)
+    {
+         $data = array(
+                'judul' => 'Update kegiatan',
+
+        );
+        $this->form_validation->set_rules('id_kegiatan', 'id_kegiatan', 'required');
+        $this->form_validation->set_rules('nama_kegiatan', 'nama_kegiatan', 'required');
+       
+        if ($this->form_validation->run() === FALSE)
+              redirect('admin/kegiatan');
+             
+        else {
+            $this->m_umum->update_data("kegiatan");
+            $notif = " Update data Berhasil";
+            $this->session->set_flashdata('update', $notif);
+            redirect('admin/kegiatan');
+        }
+    }
+    function delete_kegiatan($id)
+    {
+
+        $this->m_umum->hapus('kegiatan', 'id_kegiatan', $id);
+        $notif = "Data berhasil dihapuskan";
+        $this->session->set_flashdata('delete', $notif);
+        redirect('admin/kegiatan');
+    }
+    function sub_kegiatan()
+    {
+        $data = array(
+            'judul' => 'Data Sub Kegiatan',
+            'dt_sub_kegiatan' => $this->m_umum->get_sub_kegiatan(),
+            'dt_kegiatan' => $this->m_umum->get_data('kegiatan'),
+
+        );
+        $this->template->load('admin/template', 'admin/sub_kegiatan', $data);
+    }
+    function tambah_sub_kegiatan()
+     {
+    $this->db->set('id_sub_kegiatan', 'UUID()', FALSE);
+      
+        $this->form_validation->set_rules('nama_sub_kegiatan', 'nama_sub_kegiatan', 'required');
+
+        if ($this->form_validation->run() === FALSE)
+          redirect('admin/sub_kegiatan');
+        else {
+
+            $this->m_umum->set_data("sub_kegiatan");
+            $notif = "Tambah Data  Berhasil";
+            $this->session->set_flashdata('success', $notif);
+            redirect('admin/sub_kegiatan');
+        }
+    }
+    function update_sub_kegiatan($id=NULL)
+    {
+         $data = array(
+                'judul' => 'Update sub_kegiatan',
+
+        );
+        $this->form_validation->set_rules('id_sub_kegiatan', 'id_sub_kegiatan', 'required');
+        $this->form_validation->set_rules('nama_sub_kegiatan', 'nama_sub_kegiatan', 'required');
+       
+        if ($this->form_validation->run() === FALSE)
+              redirect('admin/sub_kegiatan');
+             
+        else {
+            $this->m_umum->update_data("sub_kegiatan");
+            $notif = " Update data Berhasil";
+            $this->session->set_flashdata('update', $notif);
+            redirect('admin/sub_kegiatan');
+        }
+    }
+    function delete_sub_kegiatan($id)
+    {
+
+        $this->m_umum->hapus('sub_kegiatan', 'id_sub_kegiatan', $id);
+        $notif = "Data berhasil dihapuskan";
+        $this->session->set_flashdata('delete', $notif);
+        redirect('admin/sub_kegiatan');
     }
     function jenis_npd()
     {

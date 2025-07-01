@@ -65,7 +65,13 @@ href="<?php echo base_url('pptk/rincian_npd/'.$d->id_permintaan_anggaran);?>"
        data-toggle="modal" data-target="#search<?= $d->id_permintaan_anggaran ?>"
          
           > 
- <i class="fa fa-search"></i></a></td>
+ <i class="fa fa-search"></i></a>
+ <?php if($d->status_kpa==2) :?><a  class="btn  btn-danger btn-sm" data-tooltip="tooltip"
+  data-placement="top"
+  title="Cetak NPD" 
+
+href="<?php echo base_url('pptk/cetak_npd/'.$d->id_permintaan_anggaran);?>" 
+> <i class="fa fa-print"></i></a><?php endif; ?></td>
  <td> <?php if($d->status_pptk==1) :?><span class="badge badge-danger">Belum Diperiksa</span><?php endif; ?>
                        <?php if($d->status_pptk==2) :?><span class="badge badge-success"> Sudah Divalidasi</span><?php endif; ?></td>
                         <td><?= $d->no_npd; ?></td>

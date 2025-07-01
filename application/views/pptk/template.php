@@ -103,7 +103,7 @@
                                  <li>
                                     <a class="dropdown-toggle" data-toggle="dropdown"><img class="img-responsive rounded-circle" src="<?= base_url();?>assets/images/layout_img/user_img.jpg" alt="#" /><span class="name_user"><?= $this->session->userdata('ses_nama'); ?></span></a>
                                     <div class="dropdown-menu">
-                                       <a class="dropdown-item" href="<?= base_url();?>assets/profile.html">My Profile</a>
+                                       <a class="dropdown-item"   data-toggle="modal" data-target="#ganti" >Ganti Password</a>
                                       
                                        <a class="dropdown-item" href="<?= base_url('login/logout');?>"><span>Log Out</span> <i class="fa fa-sign-out"></i></a>
                                     </div>
@@ -114,7 +114,41 @@
                      </div>
                   </nav>
                </div>
-        
+          <div class="modal fade" id="ganti" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+
+<!-- Modal Header -->
+<div class="modal-header">
+<h4 class="modal-title">Ganti Password</h4>
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+<?php  
+echo validation_errors();                       
+echo form_open('pptk/ganti_password'); ?>
+
+<!-- Modal body -->
+<div class="modal-body">
+<div class="mb-3">
+  <input type="hidden" class="form-control"  name="id_pegawai" value="<?= $this->session->userdata('ses_id_peg'); ?>"  required >
+    <label for="exampleInputEmail1">Password Baru</label>
+    <input type="text" class="form-control"  name="password"   required >
+    
+  </div>
+  
+</div>
+
+<!-- Modal footer -->
+<div class="modal-footer">
+
+<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+<input type="submit" name="submit"  class="btn btn-info btn-pill" value="Submit">
+
+</div>
+</form>
+</div>
+</div>
+</div>
                 <?= $contents ?>
                 <!-- /.container-fluid -->
    <div class="container-fluid">

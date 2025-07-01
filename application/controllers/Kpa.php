@@ -10,6 +10,17 @@ function __construct(){
         redirect(base_url('login'));
         }
   }
+     function ganti_password()
+    {
+        $id_pegawai = $this->input->post('id_pegawai');
+        $password = $this->input->post('password');
+        $password_hash = password_hash($password, PASSWORD_DEFAULT);
+    $this->db->query("UPDATE pegawai SET password=? WHERE id_pegawai=?", array($password_hash, $id_pegawai));
+            $notif = "Ganti Password Berhasil";
+            $this->session->set_flashdata('update', $notif);
+            redirect('kpa/index');
+        
+    }
   function index()
     {
         $data = array(
@@ -20,6 +31,20 @@ function __construct(){
         );
          
         $this->template->load('kpa/template', 'kpa/home', $data);
+    }
+         function cetak_npd($id)
+    {
+        $data = array(
+            'judul' => 'Data NPD',
+           'dt_rincian_npd' => $this->m_umum->get_rincian_npd($id),
+            'y' => $this->m_umum->get_npd_cetak($id),
+            't' => $this->m_umum->get_ttd_kpa(),
+            'r' => $this->m_umum->get_ttd_pptk(),
+      
+            
+
+        );
+        $this->load->view('laporan/cetak_npd', $data);
     }
  function permintaan_anggaran()
     {
@@ -57,9 +82,10 @@ $sql11 = "update permintaan_anggaran set status_npd=1, status_pptk=1 where id_pe
     {
          $id_permintaan_anggaran=$this->input->post('id_permintaan_anggaran');
          $status=$this->input->post('status');
+             $tgl=date('Y-m-d');
                 $catatan_npd=$this->input->post('catatan_npd');
          if($status==1){
-         $sql11 = "update permintaan_anggaran set status_kpa=2, status_ppkeu=1 where id_permintaan_anggaran='$id_permintaan_anggaran'";
+         $sql11 = "update permintaan_anggaran set status_kpa=2, status_ppkeu=1, tgl_persetujuan_kpa='$tgl' where id_permintaan_anggaran='$id_permintaan_anggaran'";
          $this->db->query($sql11);        }
          else{
               $sql11 = "update permintaan_anggaran set status_kpa=3, status_npd=0,status_pptk=0, catatan_npd='$catatan_npd' where id_permintaan_anggaran='$id_permintaan_anggaran'";

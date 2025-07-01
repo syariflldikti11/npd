@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 30 Jun 2025 pada 16.41
--- Versi server: 10.4.17-MariaDB
--- Versi PHP: 7.3.27
+-- Waktu pembuatan: 01 Jul 2025 pada 11.03
+-- Versi server: 10.4.25-MariaDB
+-- Versi PHP: 7.4.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -104,6 +104,26 @@ INSERT INTO `jenis_npd` (`id_jenis_npd`, `nama_jenis_npd`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `kegiatan`
+--
+
+CREATE TABLE `kegiatan` (
+  `id_kegiatan` varchar(100) NOT NULL,
+  `kode_kegiatan` varchar(100) NOT NULL,
+  `nama_kegiatan` varchar(100) NOT NULL,
+  `id_program` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `kegiatan`
+--
+
+INSERT INTO `kegiatan` (`id_kegiatan`, `kode_kegiatan`, `nama_kegiatan`, `id_program`) VALUES
+('c906b656-5659-11f0-b601-c454445434d3', '4.01.01.2.01', 'Perencanaan, Penganggaran, dan Evaluasi Kinerja Perangkat Daerah', 'aa5d18e3-5658-11f0-b601-c454445434d3');
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `pegawai`
 --
 
@@ -128,7 +148,7 @@ INSERT INTO `pegawai` (`id_pegawai`, `nip`, `nama_pegawai`, `id_bagian`, `passwo
 ('4a6ba4d3-536a-11f0-8b53-f8fe5ef7d437', '9', 'Putri', '1878f435-532f-11f0-8b53-f8fe5ef7d437', '$2y$10$QjhTmALtkMpM9rgMu1AzaOUoOzyzLv5MgrhSPWV486L72/iyLjdwG'),
 ('52e26c37-536a-11f0-8b53-f8fe5ef7d437', '10', 'Akbar', '36df1880-5336-11f0-8b53-f8fe5ef7d437', '$2y$10$KAMfplos4y1PynbBNXpblO2bQHj9Oue7nmA.s85zzLrsJLRIt0yUu'),
 ('f8046db4-5369-11f0-8b53-f8fe5ef7d437', '2', 'Andi', '2fc994bd-5336-11f0-8b53-f8fe5ef7d437', '$2y$10$eNtKtxqxKQB4xkyDTi50meUM8dmpv3LqH4LgLaoxQJEJR7kGDfM2u'),
-('f9b41073-5363-11f0-8b53-f8fe5ef7d437', '1', 'Syarif Firdaus', '2fc994bd-5336-11f0-8b53-f8fe5ef7d437', '$2y$10$1aGULyYjsnU3gA0F0UZaPehSx7.Ojx8xsCUsNQO9mJn.ZtT2Xgk2S'),
+('f9b41073-5363-11f0-8b53-f8fe5ef7d437', '1', 'Syarif Firdaus', '2fc994bd-5336-11f0-8b53-f8fe5ef7d437', '$2y$10$MTlqVUVTcJB8xI6N.IcyJO4a3a7DPDb.PusBIMS2uwYCsZJYdKY/.'),
 ('fec23f41-5369-11f0-8b53-f8fe5ef7d437', '3', 'Budi', '2fc994bd-5336-11f0-8b53-f8fe5ef7d437', '$2y$10$GWocYndtdkP8qbNZH/EFNeEDcrunU2EWNDYyZS8PsDE15zA7zK1ke');
 
 -- --------------------------------------------------------
@@ -163,16 +183,38 @@ CREATE TABLE `permintaan_anggaran` (
   `total` int(11) NOT NULL,
   `status_npd` int(11) NOT NULL,
   `catatan_npd` varchar(100) NOT NULL,
-  `no_npd` varchar(100) NOT NULL
+  `no_npd` varchar(100) NOT NULL,
+  `tgl_persetujuan_kpa` date DEFAULT NULL,
+  `tgl_persetujuan_pptk` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `permintaan_anggaran`
 --
 
-INSERT INTO `permintaan_anggaran` (`id_permintaan_anggaran`, `tgl_permintaan_anggaran`, `kegiatan`, `sub_kegiatan`, `program`, `no_dpa`, `tahun_anggaran`, `status_permintaan`, `id_rek_05`, `id_rek_06`, `id_akun`, `file`, `tgl_input`, `catatan`, `dokumen`, `status_pptk`, `status_kpa`, `status_ppkeu`, `status_bend`, `id_jenis_npd`, `ppn`, `pajak_daerah`, `total`, `status_npd`, `catatan_npd`, `no_npd`) VALUES
-('032957d9-5589-11f0-83ec-c454445434d3', '2025-06-30', 'Pelaksanaan Kebijakan Perekonomian', 'Koordinasi, Sinkronisasi dan Evaluasi Kebijakan Pengelolaan BUMD dan BLUD     ', 'Program Perekonomian dan Pembangunans', '4.01.03.2.04.0003', 2025, 4, '91f52979-5339-11f0-8b53-f8fe5ef7d437', '06d961c7-533b-11f0-8b53-f8fe5ef7d437', 'b4626091-536a-11f0-8b53-f8fe5ef7d437', '97b160d96cb279cc93667852ca6427c3.pdf', '2025-06-30 08:05:40', '', '', 0, 0, 0, 3, 'b74f66bb-5418-11f0-8b53-f8fe5ef7d437', 0, 0, 0, 0, 'rusak', ' 08/KSB.KEU/XI/2024'),
-('cf94767a-53f3-11f0-8b53-f8fe5ef7d437', '2025-06-28', 'Pelaksanaan Kebijakan Perekonomian', 'Koordinasi, Sinkronisasi dan Evaluasi Kebijakan Pengelolaan BUMD dan BLUD     ', 'Program Perekonomian dan Pembangunan', '4.01.03.2.04.0003', 2025, 4, '91f52979-5339-11f0-8b53-f8fe5ef7d437', '06d961c7-533b-11f0-8b53-f8fe5ef7d437', 'b4626091-536a-11f0-8b53-f8fe5ef7d437', '7c7ed28ee1b3ea7ce141d7c3b2e3ddfa.pdf', '2025-06-28 07:45:02', '', 'a33a10e777dc737bab4380cdbaf7e5b0.pdf', 2, 2, 2, 2, 'be215365-5418-11f0-8b53-f8fe5ef7d437', 2, 10, 200000, 1, 'benerin', '');
+INSERT INTO `permintaan_anggaran` (`id_permintaan_anggaran`, `tgl_permintaan_anggaran`, `kegiatan`, `sub_kegiatan`, `program`, `no_dpa`, `tahun_anggaran`, `status_permintaan`, `id_rek_05`, `id_rek_06`, `id_akun`, `file`, `tgl_input`, `catatan`, `dokumen`, `status_pptk`, `status_kpa`, `status_ppkeu`, `status_bend`, `id_jenis_npd`, `ppn`, `pajak_daerah`, `total`, `status_npd`, `catatan_npd`, `no_npd`, `tgl_persetujuan_kpa`, `tgl_persetujuan_pptk`) VALUES
+('032957d9-5589-11f0-83ec-c454445434d3', '2025-06-30', 'Pelaksanaan Kebijakan Perekonomian', 'Koordinasi, Sinkronisasi dan Evaluasi Kebijakan Pengelolaan BUMD dan BLUD     ', 'Program Perekonomian dan Pembangunans', '4.01.03.2.04.0003', 2025, 4, '91f52979-5339-11f0-8b53-f8fe5ef7d437', '06d961c7-533b-11f0-8b53-f8fe5ef7d437', 'b4626091-536a-11f0-8b53-f8fe5ef7d437', '97b160d96cb279cc93667852ca6427c3.pdf', '2025-06-30 08:05:40', '', '', 0, 0, 0, 3, 'b74f66bb-5418-11f0-8b53-f8fe5ef7d437', 0, 0, 0, 0, 'rusak', ' 08/KSB.KEU/XI/2024', NULL, NULL),
+('ab2e0bbe-562f-11f0-a0b0-c454445434d3', '2025-07-01', 'wt', 'wt', 'dewr', 'rt', 2025, 0, '91f52979-5339-11f0-8b53-f8fe5ef7d437', 'e1b008d2-533a-11f0-8b53-f8fe5ef7d437', 'b4626091-536a-11f0-8b53-f8fe5ef7d437', 'bc78fa84cf2103cd4c8b2a403e50f087.pdf', '2025-07-01 03:58:38', '', '', 0, 0, 0, 0, 'b74f66bb-5418-11f0-8b53-f8fe5ef7d437', 0, 0, 0, 0, '', '', NULL, NULL),
+('cf94767a-53f3-11f0-8b53-f8fe5ef7d437', '2025-06-28', 'Pelaksanaan Kebijakan Perekonomian', 'Koordinasi, Sinkronisasi dan Evaluasi Kebijakan Pengelolaan BUMD dan BLUD     ', 'Program Perekonomian dan Pembangunan', '4.01.03.2.04.0003', 2025, 4, '91f52979-5339-11f0-8b53-f8fe5ef7d437', '06d961c7-533b-11f0-8b53-f8fe5ef7d437', 'b4626091-536a-11f0-8b53-f8fe5ef7d437', '7c7ed28ee1b3ea7ce141d7c3b2e3ddfa.pdf', '2025-06-28 07:45:02', '', 'a33a10e777dc737bab4380cdbaf7e5b0.pdf', 2, 2, 2, 2, 'be215365-5418-11f0-8b53-f8fe5ef7d437', 2, 10, 200000, 1, 'benerin', ' 08/KSB.KEU/XI/2024', '2025-07-01', '2025-07-01');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `program`
+--
+
+CREATE TABLE `program` (
+  `id_program` varchar(100) NOT NULL,
+  `kode_program` varchar(100) NOT NULL,
+  `nama_program` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `program`
+--
+
+INSERT INTO `program` (`id_program`, `kode_program`, `nama_program`) VALUES
+('aa5d18e3-5658-11f0-b601-c454445434d3', '4.01.01', 'PROGRAM PENUNJANG URUSAN PEMERINTAHAN DAERAH KABUPATEN/KOTA');
 
 -- --------------------------------------------------------
 
@@ -266,6 +308,19 @@ INSERT INTO `role` (`id_role`, `nama_role`) VALUES
 (5, 'ppkeu'),
 (6, 'pptk');
 
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `sub_kegiatan`
+--
+
+CREATE TABLE `sub_kegiatan` (
+  `id_sub_kegiatan` varchar(100) NOT NULL,
+  `kode_sub_kegiatan` varchar(100) NOT NULL,
+  `nama_sub_kegiatan` varchar(100) NOT NULL,
+  `id_kegiatan` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 --
 -- Indexes for dumped tables
 --
@@ -289,6 +344,12 @@ ALTER TABLE `jenis_npd`
   ADD PRIMARY KEY (`id_jenis_npd`);
 
 --
+-- Indeks untuk tabel `kegiatan`
+--
+ALTER TABLE `kegiatan`
+  ADD PRIMARY KEY (`id_kegiatan`);
+
+--
 -- Indeks untuk tabel `pegawai`
 --
 ALTER TABLE `pegawai`
@@ -299,6 +360,12 @@ ALTER TABLE `pegawai`
 --
 ALTER TABLE `permintaan_anggaran`
   ADD PRIMARY KEY (`id_permintaan_anggaran`);
+
+--
+-- Indeks untuk tabel `program`
+--
+ALTER TABLE `program`
+  ADD PRIMARY KEY (`id_program`);
 
 --
 -- Indeks untuk tabel `rek_05`
@@ -323,6 +390,12 @@ ALTER TABLE `rincian_npd`
 --
 ALTER TABLE `role`
   ADD PRIMARY KEY (`id_role`);
+
+--
+-- Indeks untuk tabel `sub_kegiatan`
+--
+ALTER TABLE `sub_kegiatan`
+  ADD PRIMARY KEY (`id_sub_kegiatan`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

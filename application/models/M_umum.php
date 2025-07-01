@@ -108,6 +108,26 @@ function hitung($tabel){
      $query = $this->db->get();
      return $query->result(); 
     }
+    function get_kegiatan()
+  {   
+     
+    $this->db->select('*');
+      $this->db->from('kegiatan a');
+    $this->db->join('program b','a.id_program=b.id_program','left');
+ 
+     $query = $this->db->get();
+     return $query->result(); 
+    }
+        function get_sub_kegiatan()
+  {   
+     
+    $this->db->select('*');
+      $this->db->from('sub_kegiatan a');
+    $this->db->join('kegiatan b','a.id_kegiatan=b.id_kegiatan','left');
+ 
+     $query = $this->db->get();
+     return $query->result(); 
+    }
     function get_permintaan_anggaran()
   {   
     $id=$this->session->userdata('ses_id');
@@ -235,6 +255,38 @@ function hitung($tabel){
       
      $query = $this->db->get();
      return $query->result(); 
+    }
+    function get_ttd_kpa()
+  {   
+    $id=$this->session->userdata('ses_id');
+    $tahun=$this->session->userdata('tahun');
+    $tahun_akun=$this->session->userdata('tahun_akun');
+    $id_bagian=$this->session->userdata('ses_id_bag');
+    $this->db->select('*');
+      $this->db->from('pegawai a');
+    $this->db->join('akun b','a.id_pegawai=b.id_pegawai','left');
+    $this->db->join('pegawai f','f.id_pegawai=b.id_pegawai','left');
+        $this->db->where('b.tahun_akun',$tahun_akun);
+        $this->db->where('f.id_bagian',$id_bagian);
+        $this->db->where('b.id_role',3);   
+     $query = $this->db->get();
+     return $query->row(); 
+    }
+      function get_ttd_pptk()
+  {   
+    $id=$this->session->userdata('ses_id');
+    $tahun=$this->session->userdata('tahun');
+    $tahun_akun=$this->session->userdata('tahun_akun');
+    $id_bagian=$this->session->userdata('ses_id_bag');
+    $this->db->select('*');
+      $this->db->from('pegawai a');
+    $this->db->join('akun b','a.id_pegawai=b.id_pegawai','left');
+    $this->db->join('pegawai f','f.id_pegawai=b.id_pegawai','left');
+        $this->db->where('b.tahun_akun',$tahun_akun);
+        $this->db->where('f.id_bagian',$id_bagian);
+        $this->db->where('b.id_role',6);   
+     $query = $this->db->get();
+     return $query->row(); 
     }
      function get_npd_bendahara()
   {   

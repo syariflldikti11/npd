@@ -54,8 +54,13 @@ class Login extends CI_Controller{
                
    if($data['id_role']=='1' && password_verify($password, $data['password'])){ 
                     $this->session->set_userdata('akses','1');
+                    $this->session->set_userdata('ses_id',$data['id_akun']);
                        $this->session->set_userdata('ses_nama',$data['nama_pegawai']);
+                       $this->session->set_userdata('ses_bag',$data['nama_bagian']);
                          $this->session->set_userdata('tahun',$tahun);
+                         $this->session->set_userdata('tahun_akun',$data['tahun_akun']);
+                          $this->session->set_userdata('ses_id_bag',$data['id_bag']);
+                          $this->session->set_userdata('ses_id_peg',$data['id_pegawai']);
                     redirect('admin/index');
                  }
                   if($data['id_role']=='2' && password_verify($password, $data['password'])){ 
@@ -65,6 +70,8 @@ class Login extends CI_Controller{
                        $this->session->set_userdata('ses_bag',$data['nama_bagian']);
                          $this->session->set_userdata('tahun',$tahun);
                          $this->session->set_userdata('tahun_akun',$data['tahun_akun']);
+                          $this->session->set_userdata('ses_id_bag',$data['id_bag']);
+                            $this->session->set_userdata('ses_id_peg',$data['id_pegawai']);
                     redirect('kasubbag/index');
                  }
                   if($data['id_role']=='6' && password_verify($password, $data['password'])){ 
@@ -75,6 +82,7 @@ class Login extends CI_Controller{
                          $this->session->set_userdata('tahun',$tahun);
                          $this->session->set_userdata('ses_id_bag',$data['id_bag']);
                               $this->session->set_userdata('tahun_akun',$data['tahun_akun']);
+                                $this->session->set_userdata('ses_id_peg',$data['id_pegawai']);
                     redirect('pptk/index');
                  }
                   if($data['id_role']=='3' && password_verify($password, $data['password'])){ 
@@ -85,6 +93,7 @@ class Login extends CI_Controller{
                          $this->session->set_userdata('tahun',$tahun);
                          $this->session->set_userdata('ses_id_bag',$data['id_bag']);
                               $this->session->set_userdata('tahun_akun',$data['tahun_akun']);
+                                $this->session->set_userdata('ses_id_peg',$data['id_pegawai']);
                     redirect('kpa/index');
                  }
                   if($data['id_role']=='4' && password_verify($password, $data['password'])){ 
@@ -95,6 +104,7 @@ class Login extends CI_Controller{
                          $this->session->set_userdata('tahun',$tahun);
                          $this->session->set_userdata('ses_id_bag',$data['id_bag']);
                               $this->session->set_userdata('tahun_akun',$data['tahun_akun']);
+                                $this->session->set_userdata('ses_id_peg',$data['id_pegawai']);
                     redirect('bendahara/index');
                  }
                   if($data['id_role']=='5' && password_verify($password, $data['password'])){ 
@@ -105,6 +115,7 @@ class Login extends CI_Controller{
                          $this->session->set_userdata('tahun',$tahun);
                          $this->session->set_userdata('ses_id_bag',$data['id_bag']);
                               $this->session->set_userdata('tahun_akun',$data['tahun_akun']);
+                                $this->session->set_userdata('ses_id_peg',$data['id_pegawai']);
                     redirect('ppkeu/index');
                  }
                  

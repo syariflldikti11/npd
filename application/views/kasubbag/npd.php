@@ -65,12 +65,12 @@ href="<?php echo base_url('kasubbag/rincian_npd/'.$d->id_permintaan_anggaran);?>
          
           > 
  <i class="fa fa-search"></i></a>
-<a  class="btn  btn-danger btn-sm" data-tooltip="tooltip"
+<?php if($d->status_kpa==2) :?><a  class="btn  btn-danger btn-sm" data-tooltip="tooltip"
   data-placement="top"
   title="Cetak NPD" 
 
 href="<?php echo base_url('kasubbag/cetak_npd/'.$d->id_permintaan_anggaran);?>" 
-> <i class="fa fa-print"></i></a> </td>
+> <i class="fa fa-print"></i></a><?php endif; ?> </td>
                 <td><?= $d->no_npd; ?></td>
                 <td><?= $d->nama_jenis_npd; ?></td>
                 <td><?= $d->tgl_permintaan_anggaran; ?></td>

@@ -61,16 +61,7 @@ function rupiah($angka){
  
  
   
-  ?>
-<style type="text/css">
-<!--
-.style6 {font-weight: bold}
-.style7 {
-  font-size: x-small
-}
--->
-</style>
-</head>
+  ?></head></head></head></head></head></head></head></head></head></head></head></head></head></head>
 <style>
 
  .saya
@@ -135,30 +126,35 @@ margin : 0px;
             }
 }
 .style5 {border: 1px solid black; border-collapse: collapse;
-  font-weight: bold; font-family: "Calibri Light"; padding-left:3px; padding-right:3px; }
-.style8 {border: 1px solid black; border-collapse: collapse; font-size:12px;  padding-left:3px;  }
+   padding-left:3px; padding-right:3px; }
 </style>
 
  <table width="100%" border="0">
   <tr>
-    <td width="13%"><img src="<?= base_url(); ?>/assets/images/banjar.png" width="80px"></td>
-    <td width="72%"><div align="center">PEMERINTAH KABUPATEN BANJAR<br />
-        SEKRETARIAT DAERAH<br />
-       Jl. A. Yani No.2 Martapura Telp. (0511) 4721002-4721064 Fax (0511)4721538 Kode Pos 70611 Kalsel                
+    <td width="18%"><img src="<?= base_url(); ?>/assets/images/banjar.png" width="80px"></td>
+    <td width="79%"><div align="center"><strong><font size="+1">PEMERINTAH KABUPATEN BANJAR</font></strong><br />
+        <strong>SEKRETARIAT DAERAH</strong><br />
+       <font size="-1">Jl. A. Yani No.2 Martapura Telp. (0511) 4721002-4721064 Fax (0511)4721538 Kode Pos 70611 Kalsel    </font>            
 
         <br />
-       Website : www.banjarkab.go.id E-Mail : banjarkab@banjarkab.go.id                 
+        <font size="-1">Website : www.banjarkab.go.id E-Mail : banjarkab@banjarkab.go.id   </font>              
 
        
 
     </div></td>
-    <td width="15%">&nbsp;</td>
+    <td width="3%">&nbsp;</td>
   </tr>
 </table>
 <div style='mso-element:para-border-div;border:none;border-top:solid windowtext 3.0pt;
 padding:1.0pt 0cm 0cm 0cm'>
-<p>
- <table class="saya" width="100%">
+<p align="center"><strong>NOTA PENCAIRAN DANA (NPD)
+</strong>
+  <br />
+Nomor : 
+<?= $y->no_npd; ?>
+<br />
+<br />
+<table class="saya" width="100%">
                                   <tr>
                                     <td><b>BENDAHARA PENGELUARAN</b></td>
 
@@ -178,9 +174,10 @@ padding:1.0pt 0cm 0cm 0cm'>
    <table class="saya" width="100%">
                                   <tr>
                                     <td width="4%">1.</td>
-                                    <td width="50%">Pejabat Pelaksana Teknis Kegiatan</td>
-                                    <td width="46%">: <?= $this->session->userdata('ses_nama'); ?></td>
-                                  </tr>
+                                    <td width="35%">Pejabat Pelaksana Teknis Kegiatan</td>
+                                    <td width="61%">: 
+                                    <?= $r->nama_pegawai ?></td>
+     </tr>
                                   <tr>
                                     <td>2.</td>
                                     <td>Program</td>
@@ -373,3 +370,82 @@ padding:1.0pt 0cm 0cm 0cm'>
               </tr>
         </tbody>
     </table>
+     <table width="100%" border="0">
+       <tr>
+         <td width="50%">&nbsp;</td>
+         <td width="50%"><p>Martapura, 
+           <?= date('Y-m-d'); ?>
+           <br />
+         </p></td>
+       </tr>
+       <tr>
+         <td>&nbsp;</td>
+         <td>&nbsp;</td>
+       </tr>
+       <tr>
+         <td>Kuasa Pengguna Anggaran</td>
+         <td>Pejabat Pelaksana Teknis Kegiatan</td>
+       </tr>
+       <tr>
+         <td><p>
+          <?php
+   include "phpqrcode/qrlib.php";
+   ?>
+   <?php if($y->status_kpa==2) :?>
+   <?php
+   
+
+   $no=1;
+                                           $tempdir = "temp/"; 
+if (!file_exists($tempdir))
+    mkdir($tempdir);
+    $teks=$y->id_permintaan_anggaran; 
+   $isi_teks1 = $teks;
+                //Nama file yang akan disimpan pada folder temp 
+                $namafile1 = $teks . "_1.png";
+                //Kualitas dari QRCode 
+                $quality1 = 'H'; 
+                //Ukuran besar QRCode
+                $ukuran1 = 4; 
+                $padding1 =0; 
+ QRCode::png(base_url("cekqr/kpa/$isi_teks1"), $tempdir . $namafile1, $quality1, $ukuran1, $padding1);
+                ?>
+    <img src="<?php echo base_url();?>temp/<?php echo $namafile1; ?>" width="100px"><?php endif; ?></p>
+         </td>
+         <td>
+            <?php if($y->status_kpa==2) :?><?php
+  
+
+   $no=1;
+                                           $tempdir = "temp/"; 
+if (!file_exists($tempdir))
+    mkdir($tempdir);
+    $teks2=$y->id_permintaan_anggaran; 
+   $isi_teks2 = $teks2;
+                //Nama file yang akan disimpan pada folder temp 
+            $namafile2 = $teks . "_2.png";
+                //Kualitas dari QRCode 
+                $quality2 = 'H'; 
+                //Ukuran besar QRCode
+                $ukuran2 = 4; 
+                $padding2 =0; 
+ QRCode::png(base_url("cekqr/pptk/$isi_teks1"), $tempdir . $namafile2, $quality2, $ukuran2, $padding2);
+                ?>
+   <img src="<?php echo base_url();?>temp/<?php echo $namafile2; ?>" width="100px"><?php endif; ?></td>
+       </tr>
+       <tr>
+         <td>
+           <?= $t->nama_pegawai ?>
+       </td>
+         <td><?= $r->nama_pegawai ?></td>
+       </tr>
+       <tr>
+         <td>
+           NIP. <?= $t->nip ?>
+         </td>
+         <td>NIP.
+         <?= $r->nip ?></td>
+       </tr>
+     </table>
+     <p>&nbsp;</p>
+ 
