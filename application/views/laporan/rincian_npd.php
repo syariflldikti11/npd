@@ -16,8 +16,7 @@ function rupiah($angka){
 ?>
 <?php 
 
- $dari=$_POST['dari'];
- $sampai=$_POST['sampai'];
+ 
   // FUNGSI TERBILANG OLEH : MALASNGODING.COM
   // WEBSITE : WWW.MALASNGODING.COM
   // AUTHOR : https://www.malasngoding.com/author/admin
@@ -149,72 +148,55 @@ margin : 0px;
 <div style='mso-element:para-border-div;border:none;border-top:solid windowtext 3.0pt;
 padding:1.0pt 0cm 0cm 0cm'>
 <center><strong><br />
-LAPORAN NOTA PENCAIRAN DANA</strong><br />
+LAPORAN RINCIAN NPD</strong><br />
   <br />
- 
-                        Dari tanggal <?= date('d-m-Y', strtotime($dari)); ?> sampai tanggal <?= date('d-m-Y', strtotime($sampai)); ?><br />
 </center>
 
-  <table class="saya" width="100%">
-        <thead>
+<table width="100%" border="0" class="saya">
+
+    <thead>
+        <tr>
+            <th class="style5">No NPD</th>
+            <th class="style5">Uraian</th>
+
+                <th class="style5">Anggaran</th>
+                <th class="style5">RAK Tersedia</th>
+                <th class="style5">Akumulasi Pencairan Sebelumnya</th>
+                <th class="style5">Pengajuan Pencairan</th>
+                  <th class="style5">Akumulasi Pencairan sd Saat ini</th>
+                  <th class="style5">Sisa</th>
+        </tr>
+    </thead>
+    <tbody>
+      <?php 
+        $prev_no_npd = '';
+
+        foreach($rincian_npd as $row): 
+            $no_npd = $row['no_npd'];
+          
+         
+            $uraian = $row['uraian'];
+          
+        ?>
             <tr>
-                <th class="style5">No</th>
-                <th class="style5">Status</th>
-                <th class="style5">Bagian</th>
-                <th class="style5">Jenis NPD</th>
-                <th class="style5">Tanggal</th>
-                  <th class="style5">Program</th>
-                <th class="style5">Kegiatan</th>
-                <th class="style5">Sub Kegiatan</th>
-              
-                <th class="style5">No DPA</th>
-                <th class="style5">Tahun Anggaran</th>
-                <th class="style5">Rek 05</th>
-                <th class="style5">Rek 06</th>
-                <th class="style5">Total Dana</th>
-             
-               
-               
-           
+                <td class="style5">
+                    <?php 
+                    if ($no_npd != $prev_no_npd) {
+                        echo $no_npd;
+                        $prev_no_npd = $no_npd;
+                    } else {
+                        echo '';
+                    }
+                    ?>
+                </td>
+                <td class="style5"><?= $uraian ?></td>
+                 <td class="style5"><?= rupiah($row['anggaran']); ?></td>
+                <td class="style5"><?= rupiah($row['rak_tersedia']); ?></td>
+                <td class="style5"><?= rupiah($row['akum_before']); ?></td>
+                <td class="style5"><?= rupiah($row['pencairan']); ?></td>
+                <td class="style5"><?= rupiah($row['akum_after']); ?></td>
+                <td class="style5"><?= rupiah($row['sisa']); ?></td>
             </tr>
-        </thead>
-        <tbody>
-           <?php 
-                    $no=1;
-                    foreach ($dt_permintaan_anggaran as $d):
-                    ?> 
-            <tr>
-                <td class="style5"><?= $no++; ?></td>
-                 <td class="style5">
-                       PPTK :  <?php if($d->status_pptk==1) :?><span class="badge badge-primary"> Diperiksa</span><?php endif; ?>
-                       <?php if($d->status_pptk==2) :?><span class="badge badge-success">Valid</span> <?php endif; ?>  <?php if($d->status_pptk==3) :?><span class="badge badge-danger">Dikembalikan</span> <?= $d->catatan_npd; ?> <?php endif; ?> <br />
-KPA : <?php if($d->status_kpa==1) :?><span class="badge badge-primary"> Diperiksa</span><?php endif; ?>
-                       <?php if($d->status_kpa==2) :?><span class="badge badge-success">Valid</span> <?php endif; ?>
-                        <?php if($d->status_kpa==3) :?><span class="badge badge-danger">Dikembalikan</span> <?= $d->catatan_npd; ?>  <?php endif; ?>  <br />
-PPKEU : <?php if($d->status_ppkeu==1) :?><span class="badge badge-primary"> Diperiksa</span><?php endif; ?>
-                       <?php if($d->status_ppkeu==2) :?><span class="badge badge-success">Valid</span> <?php endif; ?>
-                       <?php if($d->status_ppkeu==3) :?><span class="badge badge-danger">Dikembalikan</span> <?= $d->catatan_npd; ?>  <?php endif; ?>
-                         <br />
-BENDAHARA : <?php if($d->status_bend==1) :?><span class="badge badge-primary"> Diperiksa</span><?php endif; ?>
-                       <?php if($d->status_bend==2) :?><span class="badge badge-success">Valid</span> <?php endif; ?>
-                       <?php if($d->status_bend==3) :?><span class="badge badge-danger">Dikembalikan</span> <?= $d->catatan_npd; ?>  <?php endif; ?>
-                        <br /></td>
-                      <td class="style5"><?= $d->nama_bagian; ?></td>
-                <td class="style5"><?= $d->nama_jenis_npd; ?></td>
-                <td class="style5"><?= $d->tgl_permintaan_anggaran; ?></td>
-                <td class="style5"><?= $d->program; ?></td>
-                <td class="style5"><?= $d->kegiatan; ?></td>
-                <td class="style5"><?= $d->sub_kegiatan; ?></td>
-                
-                <td class="style5"><?= $d->no_dpa; ?></td>
-                <td class="style5"><?= $d->tahun_anggaran; ?></td>
-                <td class="style5"><?= $d->no_rek_05; ?> | <?= $d->nama_rek_05; ?></td>
-                <td class="style5"><?= $d->no_rek_06; ?> | <?= $d->nama_rek_06; ?></td>
-         <td class="style5"><?= rupiah($d->total); ?></td>
-             
-               
-            </tr>
-          <?php endforeach; ?>
-        </tbody>
-       
-    </table>
+        <?php endforeach; ?>
+    </tbody>
+</table>
