@@ -58,7 +58,15 @@ function hitung($tabel){
     $q = $this->db->get_where($tabel, array($kolom => $id)); //ambil satu baris data dengan $kolom=$id
     return $q->row();       //kembalikan
   }
-
+  function ambill_data($tabel, $kolom = FALSE, $id = FALSE)
+  {
+    if ($id === FALSE) {
+      $q = $this->db->get($tabel);  //ambil seluruh data tabel
+      return $q->result();    //kembalikan
+    }
+    $q = $this->db->get_where($tabel, array($kolom => $id)); //ambil satu baris data dengan $kolom=$id
+    return $q->result();       //kembalikan
+  }
   function hapus($tabel, $kolom, $id)
   {
     $this->db->delete($tabel, array($kolom => $id));
@@ -125,6 +133,20 @@ function hitung($tabel){
        
         $this->db->order_by('rek_05.nama_rek_05');
         $this->db->order_by('rek_06.nama_rek_06');
+
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+   public function get_laporan_kegiatan() {
+        $this->db->select('
+           *
+           
+        ');
+        $this->db->from('kegiatan');
+        $this->db->join('sub_kegiatan', 'sub_kegiatan.id_kegiatan = kegiatan.id_kegiatan');
+       
+        $this->db->order_by('kegiatan.nama_kegiatan');
+        $this->db->order_by('sub_kegiatan.nama_sub_kegiatan');
 
         $query = $this->db->get();
         return $query->result_array();

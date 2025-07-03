@@ -91,6 +91,15 @@ $sampai = $this->input->post('sampai');
 
  $this->load->view('laporan/pencairan_program');
     }
+     function laporan_pencairan_bagian()
+    {
+$id_program = $this->input->post('id_program');
+$id_jenis_npd = $this->input->post('id_jenis_npd');
+$dari = $this->input->post('dari');
+$sampai = $this->input->post('sampai');
+
+ $this->load->view('laporan/pencairan_bagian');
+    }
       function laporan_pencairan_rekening()
     {
         $id_bagian = $this->input->post('id_bagian');
@@ -106,6 +115,22 @@ $sampai = $this->input->post('sampai');
 
         );
         $this->load->view('laporan/pencairan_rekening', $data);
+    }
+    function laporan_pencairan_kegiatan()
+    {
+        $id_bagian = $this->input->post('id_bagian');
+$id_program = $this->input->post('id_program');
+$id_jenis_npd = $this->input->post('id_jenis_npd');
+$dari = $this->input->post('dari');
+$sampai = $this->input->post('sampai');
+        $data = array(
+            'judul' => 'Data NPD',
+           'rekening' => $this->m_umum->get_laporan_kegiatan()
+      
+            
+
+        );
+        $this->load->view('laporan/pencairan_kegiatan', $data);
     }
    function cetak_npd($id)
     {

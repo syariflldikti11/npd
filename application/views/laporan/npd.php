@@ -133,7 +133,7 @@ margin : 0px;
  <table width="100%" border="0">
   <tr>
     <td width="18%"><img src="<?= base_url(); ?>/assets/images/banjar.png" width="80px"></td>
-    <td width="79%"><div align="center"><strong><font size="+1">PEMERINTAH kegiatan BANJAR</font></strong><br />
+    <td width="79%"><div align="center"><strong><font size="+1">PEMERINTAH KABUPATEN BANJAR</font></strong><br />
         <strong>SEKRETARIAT DAERAH</strong><br />
        <font size="-1">Jl. A. Yani No.2 Martapura Telp. (0511) 4721002-4721064 Fax (0511)4721538 Kode Pos 70611 Kalsel    </font>            
 

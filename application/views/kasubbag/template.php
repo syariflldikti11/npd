@@ -71,15 +71,22 @@
                          <li><a href="<?= base_url('kasubbag/npd');?>"><i class="fa fa-file red_color"></i> <span>NPD</span></a></li>
 
                      <li>
-                     <li>
-                     <li>
-                        <a href="<?= base_url();?>assets/#element" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-book green_color"></i> <span>Laporan</span></a>
+                        <a href="#element" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-book green_color"></i> <span>Laporan</span></a>
                         <ul class="collapse list-unstyled" id="element">
-                           <li><a href="<?= base_url();?>assets/general_elements.html">> <span>General Elements</span></a></li>
-                           <li><a href="<?= base_url();?>assets/media_gallery.html">> <span>Media Gallery</span></a></li>
-                           <li><a href="<?= base_url();?>assets/icons.html">> <span>Icons</span></a></li>
-                           <li><a href="<?= base_url();?>assets/invoice.html">> <span>Invoice</span></a></li>
+                            
+                          <li><a href="<?= base_url('kasubbag/laporan_program_kegiatan_sub');?>">> <span>Program/Kegiatan/Sub</span></a></li>
+                          <li><a href="<?= base_url('kasubbag/laporan_rekening');?>">> <span>Kode Rekening</span></a></li>
+                           <li><a href="#" data-toggle="modal" data-target="#minta">> <span>Data Permintaan Anggaran</span></a></li>
+                           <li><a href="#" data-toggle="modal" data-target="#npd">> <span>Data NPD</span></a></li>
+                           <li><a href="#" data-toggle="modal" data-target="#detail_npd">> <span>Data Rincian NPD</span></a></li>
+                           <li><a href="#" data-toggle="modal" data-target="#by_program">> <span>Pencairan By Program</span></a></li>
+                           <li><a href="#" data-toggle="modal" data-target="#by_kegiatan">> <span>Pencairan By Kegiatan</span></a></li>
+                           <li><a href="#" data-toggle="modal" data-target="#by_rekening">> <span>Pencairan By Rekening</span></a></li>
+                         
+                          
                         </ul>
+                    
+                    </li>
                     
                     
                   </ul>
@@ -133,6 +140,501 @@ echo form_open('kasubbag/ganti_password'); ?>
   <input type="hidden" class="form-control"  name="id_pegawai" value="<?= $this->session->userdata('ses_id_peg'); ?>"  required >
     <label for="exampleInputEmail1">Password Baru</label>
     <input type="text" class="form-control"  name="password"   required >
+    
+  </div>
+  
+</div>
+
+<!-- Modal footer -->
+<div class="modal-footer">
+
+<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+<input type="submit" name="submit"  class="btn btn-info btn-pill" value="Submit">
+
+</div>
+</form>
+</div>
+</div>
+</div>
+
+ <?php
+  $id_bag=$this->session->userdata('ses_id_bag');
+                                             $dt_jenis_npd=$this->m_umum->get_data('jenis_npd');
+                                             $dt_bagian=$this->m_umum->ambill_data('bagian','id_bagian',$id_bag);
+                                                $dt_program=$this->m_umum->get_data('program');
+                                              ?>
+                                              <div class="modal fade" id="minta" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+
+<!-- Modal Header -->
+<div class="modal-header">
+<h4 class="modal-title">Permintaan Anggaran</h4>
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+<?php  
+echo validation_errors();                       
+echo form_open('kasubbag/laporan_permintaan_anggaran'); ?>
+
+<!-- Modal body -->
+<div class="modal-body">
+<div class="mb-3">
+  
+    <label for="exampleInputEmail1">Bagian</label>
+  <select class="form-control"  id="exampleSelectGender" name="id_bagian">
+                       
+                           <?php 
+                  
+                    foreach ($dt_bagian as $a):
+                    ?> 
+                       <option value="='<?= $a->id_bagian; ?>'"><?= $a->nama_bagian; ?></option>
+                  <?php endforeach; ?>
+                        </select>
+    
+  </div>
+  <div class="mb-3">
+  
+    <label for="exampleInputEmail1">Jenis NPD</label>
+  <select class="form-control"  id="exampleSelectGender" name="id_jenis_npd">
+                         <option value="!='semua'">Semua Jenis NPD</option>
+                           <?php 
+                  
+                    foreach ($dt_jenis_npd as $aa):
+                    ?> 
+                       <option value="='<?= $aa->id_jenis_npd; ?>'"><?= $aa->nama_jenis_npd; ?></option>
+                  <?php endforeach; ?>
+                        </select>
+    
+  </div>
+  <div class="mb-3">
+  
+    <label for="exampleInputEmail1">Status Permintaan</label>
+     <select class="form-control" name="status_permintaan">
+                         <option value="!=00">Semua Status</option>
+                         <option value="=0">Belum Dikirim</option>
+                         <option value="=1">Dikirim</option>
+                         <option value="=2">Dikenbalikan</option>
+                         <option value="=3">Ditolak</option>
+                         <option value="=4">Disetujui</option>
+                          
+                        </select>
+    
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputEmail1">Dari</label>
+    <input type="date" class="form-control"  name="dari"   required >
+    
+  </div>
+   <div class="mb-3">
+    <label for="exampleInputEmail1">Sampai</label>
+    <input type="date" class="form-control"  name="sampai"   required >
+    
+  </div>
+  
+</div>
+
+<!-- Modal footer -->
+<div class="modal-footer">
+
+<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+<input type="submit" name="submit"  class="btn btn-info btn-pill" value="Submit">
+
+</div>
+</form>
+</div>
+</div>
+</div>
+
+<div class="modal fade" id="npd" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+
+<!-- Modal Header -->
+<div class="modal-header">
+<h4 class="modal-title">NPD</h4>
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+<?php  
+echo validation_errors();                       
+echo form_open('kasubbag/laporan_npd'); ?>
+
+<!-- Modal body -->
+<div class="modal-body">
+<div class="mb-3">
+  
+    <label for="exampleInputEmail1">Bagian</label>
+  <select class="form-control"  id="exampleSelectGender" name="id_bagian">
+                    
+                           <?php 
+                  
+                    foreach ($dt_bagian as $a):
+                    ?> 
+                       <option value="='<?= $a->id_bagian; ?>'"><?= $a->nama_bagian; ?></option>
+                  <?php endforeach; ?>
+                        </select>
+    
+  </div>
+  <div class="mb-3">
+  
+    <label for="exampleInputEmail1">Jenis NPD</label>
+  <select class="form-control"  id="exampleSelectGender" name="id_jenis_npd">
+                         <option value="!='semua'">Semua Jenis NPD</option>
+                           <?php 
+                  
+                    foreach ($dt_jenis_npd as $aa):
+                    ?> 
+                       <option value="='<?= $aa->id_jenis_npd; ?>'"><?= $aa->nama_jenis_npd; ?></option>
+                  <?php endforeach; ?>
+                        </select>
+    
+  </div>
+ 
+  <div class="mb-3">
+    <label for="exampleInputEmail1">Dari</label>
+    <input type="date" class="form-control"  name="dari"   required >
+    
+  </div>
+   <div class="mb-3">
+    <label for="exampleInputEmail1">Sampai</label>
+    <input type="date" class="form-control"  name="sampai"   required >
+    
+  </div>
+  
+</div>
+
+<!-- Modal footer -->
+<div class="modal-footer">
+
+<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+<input type="submit" name="submit"  class="btn btn-info btn-pill" value="Submit">
+
+</div>
+</form>
+</div>
+</div>
+</div>
+
+<div class="modal fade" id="detail_npd" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+
+<!-- Modal Header -->
+<div class="modal-header">
+<h4 class="modal-title">Rincian NPD</h4>
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+<?php  
+echo validation_errors();                       
+echo form_open('kasubbag/laporan_rincian_npd'); ?>
+
+<!-- Modal body -->
+<div class="modal-body">
+<div class="mb-3">
+  
+    <label for="exampleInputEmail1">Bagian</label>
+  <select class="form-control"  id="exampleSelectGender" name="id_bagian">
+                        
+                           <?php 
+                  
+                    foreach ($dt_bagian as $a):
+                    ?> 
+                       <option value="='<?= $a->id_bagian; ?>'"><?= $a->nama_bagian; ?></option>
+                  <?php endforeach; ?>
+                        </select>
+    
+  </div>
+  <div class="mb-3">
+  
+    <label for="exampleInputEmail1">Jenis NPD</label>
+  <select class="form-control"  id="exampleSelectGender" name="id_jenis_npd">
+                         <option value="!='semua'">Semua Jenis NPD</option>
+                           <?php 
+                  
+                    foreach ($dt_jenis_npd as $aa):
+                    ?> 
+                       <option value="='<?= $aa->id_jenis_npd; ?>'"><?= $aa->nama_jenis_npd; ?></option>
+                  <?php endforeach; ?>
+                        </select>
+    
+  </div>
+ 
+  <div class="mb-3">
+    <label for="exampleInputEmail1">Dari</label>
+    <input type="date" class="form-control"  name="dari"   required >
+    
+  </div>
+   <div class="mb-3">
+    <label for="exampleInputEmail1">Sampai</label>
+    <input type="date" class="form-control"  name="sampai"   required >
+    
+  </div>
+  
+</div>
+
+<!-- Modal footer -->
+<div class="modal-footer">
+
+<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+<input type="submit" name="submit"  class="btn btn-info btn-pill" value="Submit">
+
+</div>
+</form>
+</div>
+</div>
+</div>
+
+
+<div class="modal fade" id="by_program" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+
+<!-- Modal Header -->
+<div class="modal-header">
+<h4 class="modal-title">Pencairan NPD By Program</h4>
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+<?php  
+echo validation_errors();                       
+echo form_open('kasubbag/laporan_pencairan_program'); ?>
+
+<!-- Modal body -->
+<div class="modal-body">
+<div class="mb-3">
+  
+    <label for="exampleInputEmail1">Bagian</label>
+  <select class="form-control"  id="exampleSelectGender" name="id_bagian">
+                       
+                           <?php 
+                  
+                    foreach ($dt_bagian as $a):
+                    ?> 
+                       <option value="<?= $a->id_bagian; ?>"><?= $a->nama_bagian; ?></option>
+                  <?php endforeach; ?>
+                        </select>
+    
+  </div>
+  
+  <div class="mb-3">
+  
+    <label for="exampleInputEmail1">Jenis NPD</label>
+  <select class="form-control"  id="exampleSelectGender" name="id_jenis_npd">
+                         <option value="semua">Semua Jenis NPD</option>
+                           <?php 
+                  
+                    foreach ($dt_jenis_npd as $aa):
+                    ?> 
+                       <option value="<?= $aa->id_jenis_npd; ?>"><?= $aa->nama_jenis_npd; ?></option>
+                  <?php endforeach; ?>
+                        </select>
+    
+  </div>
+ 
+  <div class="mb-3">
+    <label for="exampleInputEmail1">Dari</label>
+    <input type="date" class="form-control"  name="dari"   required >
+    
+  </div>
+   <div class="mb-3">
+    <label for="exampleInputEmail1">Sampai</label>
+    <input type="date" class="form-control"  name="sampai"   required >
+    
+  </div>
+  
+</div>
+
+<!-- Modal footer -->
+<div class="modal-footer">
+
+<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+<input type="submit" name="submit"  class="btn btn-info btn-pill" value="Submit">
+
+</div>
+</form>
+</div>
+</div>
+</div>
+
+<div class="modal fade" id="by_bagian" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+
+<!-- Modal Header -->
+<div class="modal-header">
+<h4 class="modal-title">Pencairan NPD By Bagian</h4>
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+<?php  
+echo validation_errors();                       
+echo form_open('kasubbag/laporan_pencairan_bagian'); ?>
+
+<!-- Modal body -->
+<div class="modal-body">
+
+  
+  <div class="mb-3">
+  
+    <label for="exampleInputEmail1">Jenis NPD</label>
+  <select class="form-control"  id="exampleSelectGender" name="id_jenis_npd">
+                         <option value="semua">Semua Jenis NPD</option>
+                           <?php 
+                  
+                    foreach ($dt_jenis_npd as $aa):
+                    ?> 
+                       <option value="<?= $aa->id_jenis_npd; ?>"><?= $aa->nama_jenis_npd; ?></option>
+                  <?php endforeach; ?>
+                        </select>
+    
+  </div>
+ 
+  <div class="mb-3">
+    <label for="exampleInputEmail1">Dari</label>
+    <input type="date" class="form-control"  name="dari"   required >
+    
+  </div>
+   <div class="mb-3">
+    <label for="exampleInputEmail1">Sampai</label>
+    <input type="date" class="form-control"  name="sampai"   required >
+    
+  </div>
+  
+</div>
+
+<!-- Modal footer -->
+<div class="modal-footer">
+
+<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+<input type="submit" name="submit"  class="btn btn-info btn-pill" value="Submit">
+
+</div>
+</form>
+</div>
+</div>
+</div>
+
+
+<div class="modal fade" id="by_rekening" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+
+<!-- Modal Header -->
+<div class="modal-header">
+<h4 class="modal-title">Pencairan NPD By Rekening</h4>
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+<?php  
+echo validation_errors();                       
+echo form_open('kasubbag/laporan_pencairan_rekening'); ?>
+
+<!-- Modal body -->
+<div class="modal-body">
+<div class="mb-3">
+  
+    <label for="exampleInputEmail1">Bagian</label>
+  <select class="form-control"  id="exampleSelectGender" name="id_bagian">
+                       
+                           <?php 
+                  
+                    foreach ($dt_bagian as $a):
+                    ?> 
+                       <option value="<?= $a->id_bagian; ?>"><?= $a->nama_bagian; ?></option>
+                  <?php endforeach; ?>
+                        </select>
+    
+  </div>
+  
+  <div class="mb-3">
+  
+    <label for="exampleInputEmail1">Jenis NPD</label>
+  <select class="form-control"  id="exampleSelectGender" name="id_jenis_npd">
+                         <option value="semua">Semua Jenis NPD</option>
+                           <?php 
+                  
+                    foreach ($dt_jenis_npd as $aa):
+                    ?> 
+                       <option value="<?= $aa->id_jenis_npd; ?>"><?= $aa->nama_jenis_npd; ?></option>
+                  <?php endforeach; ?>
+                        </select>
+    
+  </div>
+ 
+  <div class="mb-3">
+    <label for="exampleInputEmail1">Dari</label>
+    <input type="date" class="form-control"  name="dari"   required >
+    
+  </div>
+   <div class="mb-3">
+    <label for="exampleInputEmail1">Sampai</label>
+    <input type="date" class="form-control"  name="sampai"   required >
+    
+  </div>
+  
+</div>
+
+<!-- Modal footer -->
+<div class="modal-footer">
+
+<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+<input type="submit" name="submit"  class="btn btn-info btn-pill" value="Submit">
+
+</div>
+</form>
+</div>
+</div>
+</div>
+
+<div class="modal fade" id="by_kegiatan" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+
+<!-- Modal Header -->
+<div class="modal-header">
+<h4 class="modal-title">Pencairan NPD By Kegiatan</h4>
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+<?php  
+echo validation_errors();                       
+echo form_open('kasubbag/laporan_pencairan_kegiatan'); ?>
+
+<!-- Modal body -->
+<div class="modal-body">
+<div class="mb-3">
+  
+    <label for="exampleInputEmail1">Bagian</label>
+  <select class="form-control"  id="exampleSelectGender" name="id_bagian">
+                        
+                           <?php 
+                  
+                    foreach ($dt_bagian as $a):
+                    ?> 
+                       <option value="<?= $a->id_bagian; ?>"><?= $a->nama_bagian; ?></option>
+                  <?php endforeach; ?>
+                        </select>
+    
+  </div>
+  
+  <div class="mb-3">
+  
+    <label for="exampleInputEmail1">Jenis NPD</label>
+  <select class="form-control"  id="exampleSelectGender" name="id_jenis_npd">
+                         <option value="semua">Semua Jenis NPD</option>
+                           <?php 
+                  
+                    foreach ($dt_jenis_npd as $aa):
+                    ?> 
+                       <option value="<?= $aa->id_jenis_npd; ?>"><?= $aa->nama_jenis_npd; ?></option>
+                  <?php endforeach; ?>
+                        </select>
+    
+  </div>
+ 
+  <div class="mb-3">
+    <label for="exampleInputEmail1">Dari</label>
+    <input type="date" class="form-control"  name="dari"   required >
+    
+  </div>
+   <div class="mb-3">
+    <label for="exampleInputEmail1">Sampai</label>
+    <input type="date" class="form-control"  name="sampai"   required >
     
   </div>
   

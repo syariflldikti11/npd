@@ -117,7 +117,7 @@ margin : 0px;
 <div style='mso-element:para-border-div;border:none;border-top:solid windowtext 3.0pt;
 padding:1.0pt 0cm 0cm 0cm'>
 <center><strong><br />
-LAPORAN PENCARIAN DANA BERDASARKAN REKENING</strong><br />
+LAPORAN PENCARIAN DANA BERDASARKAN KEGIATAN, SUB KEGIATAN</strong><br />
   <br />
 
                         Dari tanggal <?= date('d-m-Y', strtotime($dari)); ?> sampai tanggal <?= date('d-m-Y', strtotime($sampai)); ?><br /> <br />
@@ -141,76 +141,76 @@ Bagian : Semua Bagian <br />
 
     <thead>
         <tr>
-            <th class="style5">Rek 05</th>
-            <th class="style5">Rek 06</th>
+            <th class="style5">Kegiatan</th>
+            <th class="style5">Sub Kegiatan</th>
         </tr>
     </thead>
     <tbody>
       <?php 
-        $prev_rek_05 = '';
+        $prev_kegiatan = '';
 
         foreach($rekening as $row): 
-            $rek_05 = $row['nama_rek_05'];
-            $id_rek_05 = $row['id_rek_05'];
+            $kegiatan = $row['nama_kegiatan'];
+            $nama_kegiatan = $row['nama_kegiatan'];
            
 
-            $rek_06 = $row['nama_rek_06'];
-            $no_rek_05 = $row['no_rek_05'];
-            $no_rek_06 = $row['no_rek_06'];
+            $sub_kegiatan = $row['nama_sub_kegiatan'];
+            $kode_kegiatan = $row['kode_kegiatan'];
+            $kode_sub_kegiatan = $row['kode_sub_kegiatan'];
           
         ?>
             <tr>
                 <td class="style5">
                     <?php 
-                    if ($rek_05 != $prev_rek_05) {
-                        echo $no_rek_05; echo ' '; echo $rek_05; echo '<br />';
+                    if ($kegiatan != $prev_kegiatan) {
+                        echo $kode_kegiatan; echo ' '; echo $kegiatan; echo '<br />';
 
              if($id_bagian =='semua' && $id_jenis_npd =='semua'){
              $total=$this->db->query('Select sum(a.total) as total from permintaan_anggaran a 
-             join akun b on a.id_akun=b.id_akun join pegawai c on b.id_pegawai=c.id_pegawai join bagian d on c.id_bagian=d.id_bagian where a.tgl_permintaan_anggaran between "'.$dari.'" and "'.$sampai.'" and a.id_jenis_npd !="semua" and a.id_rek_05="'.$id_rek_05.'"  and d.id_bagian !="semua"')->row()->total;
+             join akun b on a.id_akun=b.id_akun join pegawai c on b.id_pegawai=c.id_pegawai join bagian d on c.id_bagian=d.id_bagian where a.tgl_permintaan_anggaran between "'.$dari.'" and "'.$sampai.'" and a.id_jenis_npd !="semua" and a.kegiatan="'.$nama_kegiatan.'"  and d.id_bagian !="semua"')->row()->total;
            }
 
 
            else if($id_bagian !='semua' && $id_jenis_npd !='semua'){
              $total=$this->db->query('Select sum(a.total) as total from permintaan_anggaran a 
-             join akun b on a.id_akun=b.id_akun join pegawai c on b.id_pegawai=c.id_pegawai join bagian d on c.id_bagian=d.id_bagian where a.tgl_permintaan_anggaran between "'.$dari.'" and "'.$sampai.'" and a.id_jenis_npd="'.$id_jenis_npd.'" and a.id_rek_05="'.$id_rek_05.'"  and d.id_bagian="'.$id_bagian.'"')->row()->total;
+             join akun b on a.id_akun=b.id_akun join pegawai c on b.id_pegawai=c.id_pegawai join bagian d on c.id_bagian=d.id_bagian where a.tgl_permintaan_anggaran between "'.$dari.'" and "'.$sampai.'" and a.id_jenis_npd="'.$id_jenis_npd.'" and a.kegiatan="'.$nama_kegiatan.'"  and d.id_bagian="'.$id_bagian.'"')->row()->total;
            }
            elseif ($id_bagian !='semua' && $id_jenis_npd =='semua' ) {
               $total=$this->db->query('Select sum(a.total) as total from permintaan_anggaran a 
-             join akun b on a.id_akun=b.id_akun join pegawai c on b.id_pegawai=c.id_pegawai join bagian d on c.id_bagian=d.id_bagian where a.tgl_permintaan_anggaran between "'.$dari.'" and "'.$sampai.'" and a.id_jenis_npd !="semua" and a.id_rek_05="'.$id_rek_05.'"  and d.id_bagian="'.$id_bagian.'"')->row()->total;
+             join akun b on a.id_akun=b.id_akun join pegawai c on b.id_pegawai=c.id_pegawai join bagian d on c.id_bagian=d.id_bagian where a.tgl_permintaan_anggaran between "'.$dari.'" and "'.$sampai.'" and a.id_jenis_npd !="semua" and a.kegiatan="'.$nama_kegiatan.'"  and d.id_bagian="'.$id_bagian.'"')->row()->total;
            }
             elseif ($id_bagian =='semua' && $id_jenis_npd !='semua' ) {
                $total=$this->db->query('Select sum(a.total) as total from permintaan_anggaran a 
-             join akun b on a.id_akun=b.id_akun join pegawai c on b.id_pegawai=c.id_pegawai join bagian d on c.id_bagian=d.id_bagian where a.tgl_permintaan_anggaran between "'.$dari.'" and "'.$sampai.'" and a.id_jenis_npd="'.$id_jenis_npd.'" and a.id_rek_05="'.$id_rek_05.'"  and d.id_bagian !="semua"')->row()->total;
+             join akun b on a.id_akun=b.id_akun join pegawai c on b.id_pegawai=c.id_pegawai join bagian d on c.id_bagian=d.id_bagian where a.tgl_permintaan_anggaran between "'.$dari.'" and "'.$sampai.'" and a.id_jenis_npd="'.$id_jenis_npd.'" and a.kegiatan="'.$nama_kegiatan.'"  and d.id_bagian !="semua"')->row()->total;
            }
            echo '<b>'; echo 'Rp. '; echo rupiah($total); echo '</b>'; 
            
-                        $prev_rek_05 = $rek_05;
+                        $prev_kegiatan = $kegiatan;
                     } else {
                         echo '';
                     }
                     ?>
                 </td>
-                <td class="style5"><?= $no_rek_06 ?> <?= $rek_06 ?> <br />
+                <td class="style5"><?= $kode_sub_kegiatan ?> <?= $sub_kegiatan ?> <br />
                   <?php
-                  $id_rek_06=$row['id_rek_06'];
+                  $nama_sub_kegiatan=$row['nama_sub_kegiatan'];
                   if($id_bagiann =='semua' && $id_jenis_npdd =='semua'){
              $total_rek6=$this->db->query('Select sum(a.total) as total_rek6 from permintaan_anggaran a 
-             join akun b on a.id_akun=b.id_akun join pegawai c on b.id_pegawai=c.id_pegawai join bagian d on c.id_bagian=d.id_bagian where a.tgl_permintaan_anggaran between "'.$dari.'" and "'.$sampai.'" and a.id_jenis_npd !="semua" and a.id_rek_06="'.$id_rek_06.'"  and d.id_bagian !="semua"')->row()->total_rek6;
+             join akun b on a.id_akun=b.id_akun join pegawai c on b.id_pegawai=c.id_pegawai join bagian d on c.id_bagian=d.id_bagian where a.tgl_permintaan_anggaran between "'.$dari.'" and "'.$sampai.'" and a.id_jenis_npd !="semua" and a.sub_kegiatan="'.$nama_sub_kegiatan.'"  and d.id_bagian !="semua"')->row()->total_rek6;
            }
 
 
            else if($id_bagiann !='semua' && $id_jenis_npdd !='semua'){
              $total_rek6=$this->db->query('Select sum(a.total) as total_rek6 from permintaan_anggaran a 
-             join akun b on a.id_akun=b.id_akun join pegawai c on b.id_pegawai=c.id_pegawai join bagian d on c.id_bagian=d.id_bagian where a.tgl_permintaan_anggaran between "'.$dari.'" and "'.$sampai.'" and a.id_jenis_npd="'.$id_jenis_npd.'" and a.id_rek_06="'.$id_rek_06.'"  and d.id_bagian="'.$id_bagian.'"')->row()->total_rek6;
+             join akun b on a.id_akun=b.id_akun join pegawai c on b.id_pegawai=c.id_pegawai join bagian d on c.id_bagian=d.id_bagian where a.tgl_permintaan_anggaran between "'.$dari.'" and "'.$sampai.'" and a.id_jenis_npd="'.$id_jenis_npd.'" and a.sub_kegiatan="'.$nama_sub_kegiatan.'"  and d.id_bagian="'.$id_bagian.'"')->row()->total_rek6;
            }
            elseif ($id_bagiann !='semua' && $id_jenis_npdd =='semua' ) {
               $total_rek6=$this->db->query('Select sum(a.total) as total_rek6 from permintaan_anggaran a 
-             join akun b on a.id_akun=b.id_akun join pegawai c on b.id_pegawai=c.id_pegawai join bagian d on c.id_bagian=d.id_bagian where a.tgl_permintaan_anggaran between "'.$dari.'" and "'.$sampai.'" and a.id_jenis_npd !="semua" and a.id_rek_06="'.$id_rek_06.'"  and d.id_bagian="'.$id_bagian.'"')->row()->total_rek6;
+             join akun b on a.id_akun=b.id_akun join pegawai c on b.id_pegawai=c.id_pegawai join bagian d on c.id_bagian=d.id_bagian where a.tgl_permintaan_anggaran between "'.$dari.'" and "'.$sampai.'" and a.id_jenis_npd !="semua" and a.sub_kegiatan="'.$nama_sub_kegiatan.'"  and d.id_bagian="'.$id_bagian.'"')->row()->total_rek6;
            }
             elseif ($id_bagiann =='semua' && $id_jenis_npdd !='semua' ) {
                $total_rek6=$this->db->query('Select sum(a.total) as total_rek6 from permintaan_anggaran a 
-             join akun b on a.id_akun=b.id_akun join pegawai c on b.id_pegawai=c.id_pegawai join bagian d on c.id_bagian=d.id_bagian where a.tgl_permintaan_anggaran between "'.$dari.'" and "'.$sampai.'" and a.id_jenis_npd="'.$id_jenis_npd.'" and a.id_rek_06="'.$id_rek_06.'"  and d.id_bagian !="semua"')->row()->total_rek6;
+             join akun b on a.id_akun=b.id_akun join pegawai c on b.id_pegawai=c.id_pegawai join bagian d on c.id_bagian=d.id_bagian where a.tgl_permintaan_anggaran between "'.$dari.'" and "'.$sampai.'" and a.id_jenis_npd="'.$id_jenis_npd.'" and a.sub_kegiatan="'.$nama_sub_kegiatan.'"  and d.id_bagian !="semua"')->row()->total_rek6;
            }
            ?>
                 <b>  Rp. <?= rupiah($total_rek6); ?></b></td>
