@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 01 Jul 2025 pada 11.03
+-- Waktu pembuatan: 03 Jul 2025 pada 10.55
 -- Versi server: 10.4.25-MariaDB
 -- Versi PHP: 7.4.30
 
@@ -193,9 +193,10 @@ CREATE TABLE `permintaan_anggaran` (
 --
 
 INSERT INTO `permintaan_anggaran` (`id_permintaan_anggaran`, `tgl_permintaan_anggaran`, `kegiatan`, `sub_kegiatan`, `program`, `no_dpa`, `tahun_anggaran`, `status_permintaan`, `id_rek_05`, `id_rek_06`, `id_akun`, `file`, `tgl_input`, `catatan`, `dokumen`, `status_pptk`, `status_kpa`, `status_ppkeu`, `status_bend`, `id_jenis_npd`, `ppn`, `pajak_daerah`, `total`, `status_npd`, `catatan_npd`, `no_npd`, `tgl_persetujuan_kpa`, `tgl_persetujuan_pptk`) VALUES
-('032957d9-5589-11f0-83ec-c454445434d3', '2025-06-30', 'Pelaksanaan Kebijakan Perekonomian', 'Koordinasi, Sinkronisasi dan Evaluasi Kebijakan Pengelolaan BUMD dan BLUD     ', 'Program Perekonomian dan Pembangunans', '4.01.03.2.04.0003', 2025, 4, '91f52979-5339-11f0-8b53-f8fe5ef7d437', '06d961c7-533b-11f0-8b53-f8fe5ef7d437', 'b4626091-536a-11f0-8b53-f8fe5ef7d437', '97b160d96cb279cc93667852ca6427c3.pdf', '2025-06-30 08:05:40', '', '', 0, 0, 0, 3, 'b74f66bb-5418-11f0-8b53-f8fe5ef7d437', 0, 0, 0, 0, 'rusak', ' 08/KSB.KEU/XI/2024', NULL, NULL),
-('ab2e0bbe-562f-11f0-a0b0-c454445434d3', '2025-07-01', 'wt', 'wt', 'dewr', 'rt', 2025, 0, '91f52979-5339-11f0-8b53-f8fe5ef7d437', 'e1b008d2-533a-11f0-8b53-f8fe5ef7d437', 'b4626091-536a-11f0-8b53-f8fe5ef7d437', 'bc78fa84cf2103cd4c8b2a403e50f087.pdf', '2025-07-01 03:58:38', '', '', 0, 0, 0, 0, 'b74f66bb-5418-11f0-8b53-f8fe5ef7d437', 0, 0, 0, 0, '', '', NULL, NULL),
-('cf94767a-53f3-11f0-8b53-f8fe5ef7d437', '2025-06-28', 'Pelaksanaan Kebijakan Perekonomian', 'Koordinasi, Sinkronisasi dan Evaluasi Kebijakan Pengelolaan BUMD dan BLUD     ', 'Program Perekonomian dan Pembangunan', '4.01.03.2.04.0003', 2025, 4, '91f52979-5339-11f0-8b53-f8fe5ef7d437', '06d961c7-533b-11f0-8b53-f8fe5ef7d437', 'b4626091-536a-11f0-8b53-f8fe5ef7d437', '7c7ed28ee1b3ea7ce141d7c3b2e3ddfa.pdf', '2025-06-28 07:45:02', '', 'a33a10e777dc737bab4380cdbaf7e5b0.pdf', 2, 2, 2, 2, 'be215365-5418-11f0-8b53-f8fe5ef7d437', 2, 10, 200000, 1, 'benerin', ' 08/KSB.KEU/XI/2024', '2025-07-01', '2025-07-01');
+('032957d9-5589-11f0-83ec-c454445434d3', '2025-06-30', 'Perencanaan, Penganggaran, dan Evaluasi Kinerja Perangkat Daerah', ' Penyusunan Dokumen Perencanaan Perangkat Daerah', 'PROGRAM PENUNJANG URUSAN PEMERINTAHAN DAERAH KABUPATEN/KOTA', '4.01.03.2.04.0003', 2025, 4, '91f52979-5339-11f0-8b53-f8fe5ef7d437', '06d961c7-533b-11f0-8b53-f8fe5ef7d437', 'b4626091-536a-11f0-8b53-f8fe5ef7d437', '97b160d96cb279cc93667852ca6427c3.pdf', '2025-06-30 08:05:40', '', '', 0, 0, 0, 3, 'b74f66bb-5418-11f0-8b53-f8fe5ef7d437', 0, 0, 0, 0, 'rusak', ' 08/KSB.KEU/XI/2024', NULL, NULL),
+('ab2e0bbe-562f-11f0-a0b0-c454445434d3', '2025-07-01', 'wt', 'wt', 'PROGRAM PENUNJANG URUSAN PEMERINTAHAN DAERAH KABUPATEN/KOTA', 'rt', 2025, 0, '91f52979-5339-11f0-8b53-f8fe5ef7d437', 'e1b008d2-533a-11f0-8b53-f8fe5ef7d437', 'b4626091-536a-11f0-8b53-f8fe5ef7d437', 'bc78fa84cf2103cd4c8b2a403e50f087.pdf', '2025-07-01 03:58:38', '', '', 0, 0, 0, 0, 'b74f66bb-5418-11f0-8b53-f8fe5ef7d437', 0, 0, 0, 0, '', '', NULL, NULL),
+('cf94767a-53f3-11f0-8b53-f8fe5ef7d437', '2025-06-28', 'Perencanaan, Penganggaran, dan Evaluasi Kinerja Perangkat Daerah', ' Penyusunan Dokumen Perencanaan Perangkat Daerah', 'PROGRAM PENUNJANG URUSAN PEMERINTAHAN DAERAH KABUPATEN/KOTA', '4.01.03.2.04.0003', 2025, 4, '91f52979-5339-11f0-8b53-f8fe5ef7d437', '06d961c7-533b-11f0-8b53-f8fe5ef7d437', 'b4626091-536a-11f0-8b53-f8fe5ef7d437', '7c7ed28ee1b3ea7ce141d7c3b2e3ddfa.pdf', '2025-06-28 07:45:02', '', 'a33a10e777dc737bab4380cdbaf7e5b0.pdf', 2, 2, 2, 2, 'be215365-5418-11f0-8b53-f8fe5ef7d437', 2, 10, 200000, 1, 'benerin', ' 08/KSB.KEU/XI/2024', '2025-07-01', '2025-07-01'),
+('e24afaa7-57de-11f0-b6dd-c454445434d3', '2025-07-03', 'Perencanaan, Penganggaran, dan Evaluasi Kinerja Perangkat Daerah', ' Penyusunan Dokumen Perencanaan Perangkat Daerah', 'PROGRAM PENUNJANG URUSAN PEMERINTAHAN DAERAH KABUPATEN/KOTA', '4.01.03.2.04.0003', 2025, 0, '91f52979-5339-11f0-8b53-f8fe5ef7d437', 'e1b008d2-533a-11f0-8b53-f8fe5ef7d437', 'b4626091-536a-11f0-8b53-f8fe5ef7d437', '2673d9f6ada1776c93dfc584117399e2.pdf', '2025-07-03 07:25:23', '', '', 0, 0, 0, 0, 'b74f66bb-5418-11f0-8b53-f8fe5ef7d437', 0, 0, 0, 0, '', '', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -320,6 +321,14 @@ CREATE TABLE `sub_kegiatan` (
   `nama_sub_kegiatan` varchar(100) NOT NULL,
   `id_kegiatan` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `sub_kegiatan`
+--
+
+INSERT INTO `sub_kegiatan` (`id_sub_kegiatan`, `kode_sub_kegiatan`, `nama_sub_kegiatan`, `id_kegiatan`) VALUES
+('48ef2675-57de-11f0-b6dd-c454445434d3', '4.01.01.2.01.0002', ' Penyusunan Dokumen', 'c906b656-5659-11f0-b601-c454445434d3'),
+('bff63774-565a-11f0-b601-c454445434d3', '4.01.01.2.01.0001', ' Penyusunan Dokumen Perencanaan Perangkat Daerah', 'c906b656-5659-11f0-b601-c454445434d3');
 
 --
 -- Indexes for dumped tables
