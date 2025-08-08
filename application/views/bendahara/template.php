@@ -74,8 +74,7 @@
                         <a href="#element" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-book green_color"></i> <span>Laporan</span></a>
                         <ul class="collapse list-unstyled" id="element">
                             
-                          <li><a href="<?= base_url('bendahara/laporan_program_kegiatan_sub');?>">> <span>Program/Kegiatan/Sub</span></a></li>
-                          <li><a href="<?= base_url('bendahara/laporan_rekening');?>">> <span>Kode Rekening</span></a></li>
+                         
                            <li><a href="#" data-toggle="modal" data-target="#minta">> <span>Data Permintaan Anggaran</span></a></li>
                            <li><a href="#" data-toggle="modal" data-target="#npd">> <span>Data NPD</span></a></li>
                            <li><a href="#" data-toggle="modal" data-target="#detail_npd">> <span>Data Rincian NPD</span></a></li>

@@ -151,10 +151,26 @@ $sampai = $this->input->post('sampai');
         $data = array(
             'judul' => 'Dashboard',
            'jml_pegawai'=>$this->m_umum->hitung('pegawai'),
+           'pc_jenis' => $this->m_umum->grafik_pencairan_jenis(),
+
             
 
         );
-         
+          foreach($this->m_umum->grafik_transaksi()->result_array() as $row)
+        {
+         $data['grafik_transaksi'][]=(float)$row['Januari'];
+         $data['grafik_transaksi'][]=(float)$row['Februari'];
+         $data['grafik_transaksi'][]=(float)$row['Maret'];
+         $data['grafik_transaksi'][]=(float)$row['April'];
+         $data['grafik_transaksi'][]=(float)$row['Mei'];
+         $data['grafik_transaksi'][]=(float)$row['Juni'];
+         $data['grafik_transaksi'][]=(float)$row['Juli'];
+         $data['grafik_transaksi'][]=(float)$row['Agustus'];
+         $data['grafik_transaksi'][]=(float)$row['September'];
+         $data['grafik_transaksi'][]=(float)$row['Oktober'];
+         $data['grafik_transaksi'][]=(float)$row['November'];
+         $data['grafik_transaksi'][]=(float)$row['Desember'];
+        }
         $this->template->load('admin/template', 'admin/home', $data);
     }
    function pegawai()

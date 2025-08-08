@@ -12,6 +12,44 @@ function hitung($tabel){
       return 0;
     }
   }
+  function grafik_transaksi()
+  {
+  $tgl=$this->session->userdata('tahun');
+   $sql= $this->db->query("
+   
+   select distinct
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran)  WHERE status_bend=2 and ((Month(tgl_permintaan_anggaran)=1) and (YEAR(tgl_permintaan_anggaran)='$tgl'))),0) AS 'Januari',
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran)  WHERE status_bend=2 and ((Month(tgl_permintaan_anggaran)=2) and (YEAR(tgl_permintaan_anggaran)=$tgl))),0) AS 'Februari',
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran)  WHERE status_bend=2 and ((Month(tgl_permintaan_anggaran)=3) and (YEAR(tgl_permintaan_anggaran)=$tgl))),0) AS 'Maret',
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran)  WHERE status_bend=2 and ((Month(tgl_permintaan_anggaran)=4) and (YEAR(tgl_permintaan_anggaran)=$tgl))),0) AS 'April',
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran)  WHERE status_bend=2 and ((Month(tgl_permintaan_anggaran)=5) and (YEAR(tgl_permintaan_anggaran)=$tgl))),0) AS 'Mei',
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran)  WHERE status_bend=2 and ((Month(tgl_permintaan_anggaran)=6) and (YEAR(tgl_permintaan_anggaran)=$tgl))),0) AS 'Juni',
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran)  WHERE status_bend=2 and ((Month(tgl_permintaan_anggaran)=7) and (YEAR(tgl_permintaan_anggaran)=$tgl))),0) AS 'Juli',
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran)  WHERE status_bend=2 and ((Month(tgl_permintaan_anggaran)=8) and (YEAR(tgl_permintaan_anggaran)=$tgl))),0) AS 'Agustus',
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran)  WHERE status_bend=2 and ((Month(tgl_permintaan_anggaran)=9) and (YEAR(tgl_permintaan_anggaran)=$tgl))),0) AS 'September',
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran)  WHERE status_bend=2 and ((Month(tgl_permintaan_anggaran)=10) and (YEAR(tgl_permintaan_anggaran)=$tgl))),0) AS 'Oktober',
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran)  WHERE status_bend=2 and ((Month(tgl_permintaan_anggaran)=11) and (YEAR(tgl_permintaan_anggaran)=$tgl))),0) AS 'November',
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran)  WHERE status_bend=2 and ((Month(tgl_permintaan_anggaran)=12) and (YEAR(tgl_permintaan_anggaran)=$tgl))),0) AS 'Desember'
+  from permintaan_anggaran GROUP BY YEAR(tgl_permintaan_anggaran) 
+   
+   ");
+   
+   return $sql;
+   
+  }
+   public function grafik_pencairan_jenis()
+{
+  $tahun=$this->session->userdata('tahun'); 
+    $query = $this->db->query("
+        SELECT p.nama_jenis_npd,
+               COALESCE(SUM(d.total), 0) AS total
+        FROM jenis_npd p
+        LEFT JOIN permintaan_anggaran d ON d.id_jenis_npd = p.id_jenis_npd
+       where year(d.tgl_permintaan_anggaran)=$tahun and  d.status_bend=2
+        GROUP BY p.nama_jenis_npd
+    ");
+    return $query->result();
+  }
     public function update_multiple($data, $ids) {
         // Loop untuk memperbarui setiap item berdasarkan ID
         foreach ($ids as $id) {
@@ -701,31 +739,7 @@ function hitung_surat_jalan()
       return 0;
     }
 }
-function grafik_transaksi()
-  {
-  $tgl=$this->session->userdata('tahun');
-   $sql= $this->db->query("
-   
-   select distinct
-   ifnull((SELECT sum(total) FROM (bttb)  WHERE((Month(tgl_bttb)=1) and (YEAR(tgl_bttb)='$tgl'))),0) AS 'Januari',
-   ifnull((SELECT sum(total) FROM (bttb)  WHERE((Month(tgl_bttb)=2) and (YEAR(tgl_bttb)=$tgl))),0) AS 'Februari',
-   ifnull((SELECT sum(total) FROM (bttb)  WHERE((Month(tgl_bttb)=3) and (YEAR(tgl_bttb)=$tgl))),0) AS 'Maret',
-   ifnull((SELECT sum(total) FROM (bttb)  WHERE((Month(tgl_bttb)=4) and (YEAR(tgl_bttb)=$tgl))),0) AS 'April',
-   ifnull((SELECT sum(total) FROM (bttb)  WHERE((Month(tgl_bttb)=5) and (YEAR(tgl_bttb)=$tgl))),0) AS 'Mei',
-   ifnull((SELECT sum(total) FROM (bttb)  WHERE((Month(tgl_bttb)=6) and (YEAR(tgl_bttb)=$tgl))),0) AS 'Juni',
-   ifnull((SELECT sum(total) FROM (bttb)  WHERE((Month(tgl_bttb)=7) and (YEAR(tgl_bttb)=$tgl))),0) AS 'Juli',
-   ifnull((SELECT sum(total) FROM (bttb)  WHERE((Month(tgl_bttb)=8) and (YEAR(tgl_bttb)=$tgl))),0) AS 'Agustus',
-   ifnull((SELECT sum(total) FROM (bttb)  WHERE((Month(tgl_bttb)=9) and (YEAR(tgl_bttb)=$tgl))),0) AS 'September',
-   ifnull((SELECT sum(total) FROM (bttb)  WHERE((Month(tgl_bttb)=10) and (YEAR(tgl_bttb)=$tgl))),0) AS 'Oktober',
-   ifnull((SELECT sum(total) FROM (bttb)  WHERE((Month(tgl_bttb)=11) and (YEAR(tgl_bttb)=$tgl))),0) AS 'November',
-   ifnull((SELECT sum(total) FROM (bttb)  WHERE((Month(tgl_bttb)=12) and (YEAR(tgl_bttb)=$tgl))),0) AS 'Desember'
-  from bttb GROUP BY YEAR(tgl_bttb) 
-   
-   ");
-   
-   return $sql;
-   
-  }
+
   function grafik_bttb()
   {
   $tgl=$this->session->userdata('tahun');
