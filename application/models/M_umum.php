@@ -12,6 +12,246 @@ function hitung($tabel){
       return 0;
     }
   }
+    function grafik_transaksi_pptk()
+  {
+       $id_bagian=$this->session->userdata('ses_id_bag');
+  $tgl=$this->session->userdata('tahun');
+   $sql= $this->db->query("
+   
+   select distinct
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran) join akun on permintaan_anggaran.id_akun=akun.id_akun join pegawai on akun.id_pegawai=pegawai.id_pegawai  WHERE id_bagian='$id_bagian' and status_bend=2  and ((Month(tgl_permintaan_anggaran)=1) and (YEAR(tgl_permintaan_anggaran)='$tgl'))),0) AS 'Januari',
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran) join akun on permintaan_anggaran.id_akun=akun.id_akun join pegawai on akun.id_pegawai=pegawai.id_pegawai  WHERE id_bagian='$id_bagian' and status_bend=2  and ((Month(tgl_permintaan_anggaran)=2) and (YEAR(tgl_permintaan_anggaran)=$tgl))),0) AS 'Februari',
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran) join akun on permintaan_anggaran.id_akun=akun.id_akun join pegawai on akun.id_pegawai=pegawai.id_pegawai  WHERE id_bagian='$id_bagian' and status_bend=2  and ((Month(tgl_permintaan_anggaran)=3) and (YEAR(tgl_permintaan_anggaran)=$tgl))),0) AS 'Maret',
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran) join akun on permintaan_anggaran.id_akun=akun.id_akun join pegawai on akun.id_pegawai=pegawai.id_pegawai  WHERE id_bagian='$id_bagian' and status_bend=2  and ((Month(tgl_permintaan_anggaran)=4) and (YEAR(tgl_permintaan_anggaran)=$tgl))),0) AS 'April',
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran) join akun on permintaan_anggaran.id_akun=akun.id_akun join pegawai on akun.id_pegawai=pegawai.id_pegawai  WHERE id_bagian='$id_bagian' and status_bend=2  and ((Month(tgl_permintaan_anggaran)=5) and (YEAR(tgl_permintaan_anggaran)=$tgl))),0) AS 'Mei',
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran) join akun on permintaan_anggaran.id_akun=akun.id_akun join pegawai on akun.id_pegawai=pegawai.id_pegawai  WHERE id_bagian='$id_bagian' and status_bend=2  and ((Month(tgl_permintaan_anggaran)=6) and (YEAR(tgl_permintaan_anggaran)=$tgl))),0) AS 'Juni',
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran) join akun on permintaan_anggaran.id_akun=akun.id_akun join pegawai on akun.id_pegawai=pegawai.id_pegawai  WHERE id_bagian='$id_bagian' and status_bend=2  and ((Month(tgl_permintaan_anggaran)=7) and (YEAR(tgl_permintaan_anggaran)=$tgl))),0) AS 'Juli',
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran) join akun on permintaan_anggaran.id_akun=akun.id_akun join pegawai on akun.id_pegawai=pegawai.id_pegawai  WHERE id_bagian='$id_bagian' and status_bend=2  and ((Month(tgl_permintaan_anggaran)=8) and (YEAR(tgl_permintaan_anggaran)=$tgl))),0) AS 'Agustus',
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran) join akun on permintaan_anggaran.id_akun=akun.id_akun join pegawai on akun.id_pegawai=pegawai.id_pegawai  WHERE id_bagian='$id_bagian' and status_bend=2  and ((Month(tgl_permintaan_anggaran)=9) and (YEAR(tgl_permintaan_anggaran)=$tgl))),0) AS 'September',
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran) join akun on permintaan_anggaran.id_akun=akun.id_akun join pegawai on akun.id_pegawai=pegawai.id_pegawai  WHERE id_bagian='$id_bagian' and status_bend=2  and ((Month(tgl_permintaan_anggaran)=10) and (YEAR(tgl_permintaan_anggaran)=$tgl))),0) AS 'Oktober',
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran) join akun on permintaan_anggaran.id_akun=akun.id_akun join pegawai on akun.id_pegawai=pegawai.id_pegawai  WHERE id_bagian='$id_bagian' and status_bend=2  and ((Month(tgl_permintaan_anggaran)=11) and (YEAR(tgl_permintaan_anggaran)=$tgl))),0) AS 'November',
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran) join akun on permintaan_anggaran.id_akun=akun.id_akun join pegawai on akun.id_pegawai=pegawai.id_pegawai  WHERE id_bagian='$id_bagian' and status_bend=2  and ((Month(tgl_permintaan_anggaran)=12) and (YEAR(tgl_permintaan_anggaran)=$tgl))),0) AS 'Desember'
+  from permintaan_anggaran GROUP BY YEAR(tgl_permintaan_anggaran) 
+   
+   ");
+   
+   return $sql;
+   
+  }
+  function hitung_npd_pptk()
+  {   
+    $id=$this->session->userdata('ses_id');
+    $tahun=$this->session->userdata('tahun');
+    $tahun_akun=$this->session->userdata('tahun_akun');
+    $id_bagian=$this->session->userdata('ses_id_bag');
+    $this->db->select('*');
+      $this->db->from('permintaan_anggaran a');
+    $this->db->join('jenis_npd e','a.id_jenis_npd=e.id_jenis_npd','left');
+    $this->db->join('akun b','a.id_akun=b.id_akun','left');
+    $this->db->join('pegawai f','f.id_pegawai=b.id_pegawai','left');
+    $this->db->join('rek_05 d','a.id_rek_05=d.id_rek_05','left');
+    $this->db->join('rek_06 c','a.id_rek_06=c.id_rek_06','left');
+        $this->db->where('a.tahun_anggaran',$tahun_akun);
+        $this->db->where('f.id_bagian',$id_bagian);
+        $this->db->where('a.status_pptk',1);
+    $this->db->order_by('a.status_pptk asc');
+      
+     $query = $this->db->get();
+     if($query->num_rows()>0)
+    {
+      return $query->num_rows();
+    }
+    else{
+      return 0;
+    }
+    }
+      function hitung_npd_kpa()
+  {   
+    $id=$this->session->userdata('ses_id');
+    $tahun=$this->session->userdata('tahun');
+    $tahun_akun=$this->session->userdata('tahun_akun');
+    $id_bagian=$this->session->userdata('ses_id_bag');
+    $this->db->select('*');
+      $this->db->from('permintaan_anggaran a');
+    $this->db->join('jenis_npd e','a.id_jenis_npd=e.id_jenis_npd','left');
+    $this->db->join('akun b','a.id_akun=b.id_akun','left');
+    $this->db->join('pegawai f','f.id_pegawai=b.id_pegawai','left');
+    $this->db->join('rek_05 d','a.id_rek_05=d.id_rek_05','left');
+    $this->db->join('rek_06 c','a.id_rek_06=c.id_rek_06','left');
+        $this->db->where('a.tahun_anggaran',$tahun_akun);
+        $this->db->where('f.id_bagian',$id_bagian);
+        $this->db->where('a.status_kpa',1);
+    $this->db->order_by('a.status_kpa asc');
+      
+     $query = $this->db->get();
+     if($query->num_rows()>0)
+    {
+      return $query->num_rows();
+    }
+    else{
+      return 0;
+    }
+    }
+     function hitung_npd_ppkeu()
+  {   
+    $id=$this->session->userdata('ses_id');
+    $tahun=$this->session->userdata('tahun');
+    $tahun_akun=$this->session->userdata('tahun_akun');
+    $id_bagian=$this->session->userdata('ses_id_bag');
+    $this->db->select('*');
+      $this->db->from('permintaan_anggaran a');
+    $this->db->join('jenis_npd e','a.id_jenis_npd=e.id_jenis_npd','left');
+    $this->db->join('akun b','a.id_akun=b.id_akun','left');
+    $this->db->join('rek_05 d','a.id_rek_05=d.id_rek_05','left');
+    $this->db->join('rek_06 c','a.id_rek_06=c.id_rek_06','left');
+        $this->db->where('a.tahun_anggaran',$tahun_akun);
+
+        $this->db->where('a.status_ppkeu',1);
+      
+     $query = $this->db->get();
+     if($query->num_rows()>0)
+    {
+      return $query->num_rows();
+    }
+    else{
+      return 0;
+    }
+    }
+    function hitung_npd_bend()
+  {   
+    $id=$this->session->userdata('ses_id');
+    $tahun=$this->session->userdata('tahun');
+    $tahun_akun=$this->session->userdata('tahun_akun');
+    $id_bagian=$this->session->userdata('ses_id_bag');
+    $this->db->select('*');
+      $this->db->from('permintaan_anggaran a');
+    $this->db->join('jenis_npd e','a.id_jenis_npd=e.id_jenis_npd','left');
+    $this->db->join('akun b','a.id_akun=b.id_akun','left');
+    $this->db->join('pegawai f','f.id_pegawai=b.id_pegawai','left');
+    $this->db->join('rek_05 d','a.id_rek_05=d.id_rek_05','left');
+    $this->db->join('rek_06 c','a.id_rek_06=c.id_rek_06','left');
+        $this->db->where('a.tahun_anggaran',$tahun_akun);
+   $this->db->where('f.id_bagian',$id_bagian);
+        $this->db->where('a.status_bend',1);
+      
+     $query = $this->db->get();
+     if($query->num_rows()>0)
+    {
+      return $query->num_rows();
+    }
+    else{
+      return 0;
+    }
+    }
+
+      function hitung_permintaan_anggaran_pptk()
+  {   
+    $id=$this->session->userdata('ses_id');
+    $tahun=$this->session->userdata('tahun');
+    $tahun_akun=$this->session->userdata('tahun_akun');
+    $id_bagian=$this->session->userdata('ses_id_bag');
+    $this->db->select('*');
+      $this->db->from('permintaan_anggaran a');
+    $this->db->join('jenis_npd e','a.id_jenis_npd=e.id_jenis_npd','left');
+    $this->db->join('akun b','a.id_akun=b.id_akun','left');
+    $this->db->join('pegawai f','f.id_pegawai=b.id_pegawai','left');
+    $this->db->join('rek_05 d','a.id_rek_05=d.id_rek_05','left');
+    $this->db->join('rek_06 c','a.id_rek_06=c.id_rek_06','left');
+        $this->db->where('a.tahun_anggaran',$tahun_akun);
+        $this->db->where('f.id_bagian',$id_bagian);
+        $this->db->where('a.status_permintaan',1);
+    $this->db->order_by('a.status_permintaan asc');
+      
+     $query = $this->db->get();
+
+     if($query->num_rows()>0)
+    {
+      return $query->num_rows();
+    }
+    else{
+      return 0;
+    }
+    }
+   function get_npd_pptk()
+  {   
+    $id=$this->session->userdata('ses_id');
+    $tahun=$this->session->userdata('tahun');
+    $tahun_akun=$this->session->userdata('tahun_akun');
+    $id_bagian=$this->session->userdata('ses_id_bag');
+    $this->db->select('*');
+      $this->db->from('permintaan_anggaran a');
+    $this->db->join('jenis_npd e','a.id_jenis_npd=e.id_jenis_npd','left');
+    $this->db->join('akun b','a.id_akun=b.id_akun','left');
+    $this->db->join('pegawai f','f.id_pegawai=b.id_pegawai','left');
+    $this->db->join('rek_05 d','a.id_rek_05=d.id_rek_05','left');
+    $this->db->join('rek_06 c','a.id_rek_06=c.id_rek_06','left');
+        $this->db->where('a.tahun_anggaran',$tahun_akun);
+        $this->db->where('f.id_bagian',$id_bagian);
+        $this->db->where('a.status_pptk between 1 and 2');
+    $this->db->order_by('a.status_pptk asc');
+      
+     $query = $this->db->get();
+     return $query->result(); 
+    }
+  function grafik_transaksi_kasubbag()
+  {
+        $id=$this->session->userdata('ses_id');
+  $tgl=$this->session->userdata('tahun');
+   $sql= $this->db->query("
+   
+   select distinct
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran)  WHERE status_bend=2 and id_akun='$id' and ((Month(tgl_permintaan_anggaran)=1) and (YEAR(tgl_permintaan_anggaran)='$tgl'))),0) AS 'Januari',
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran)  WHERE status_bend=2 and id_akun='$id' and ((Month(tgl_permintaan_anggaran)=2) and (YEAR(tgl_permintaan_anggaran)=$tgl))),0) AS 'Februari',
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran)  WHERE status_bend=2 and id_akun='$id' and ((Month(tgl_permintaan_anggaran)=3) and (YEAR(tgl_permintaan_anggaran)=$tgl))),0) AS 'Maret',
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran)  WHERE status_bend=2 and id_akun='$id' and ((Month(tgl_permintaan_anggaran)=4) and (YEAR(tgl_permintaan_anggaran)=$tgl))),0) AS 'April',
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran)  WHERE status_bend=2 and id_akun='$id' and ((Month(tgl_permintaan_anggaran)=5) and (YEAR(tgl_permintaan_anggaran)=$tgl))),0) AS 'Mei',
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran)  WHERE status_bend=2 and id_akun='$id' and ((Month(tgl_permintaan_anggaran)=6) and (YEAR(tgl_permintaan_anggaran)=$tgl))),0) AS 'Juni',
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran)  WHERE status_bend=2 and id_akun='$id' and ((Month(tgl_permintaan_anggaran)=7) and (YEAR(tgl_permintaan_anggaran)=$tgl))),0) AS 'Juli',
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran)  WHERE status_bend=2 and id_akun='$id' and ((Month(tgl_permintaan_anggaran)=8) and (YEAR(tgl_permintaan_anggaran)=$tgl))),0) AS 'Agustus',
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran)  WHERE status_bend=2 and id_akun='$id' and ((Month(tgl_permintaan_anggaran)=9) and (YEAR(tgl_permintaan_anggaran)=$tgl))),0) AS 'September',
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran)  WHERE status_bend=2 and id_akun='$id' and ((Month(tgl_permintaan_anggaran)=10) and (YEAR(tgl_permintaan_anggaran)=$tgl))),0) AS 'Oktober',
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran)  WHERE status_bend=2 and id_akun='$id' and ((Month(tgl_permintaan_anggaran)=11) and (YEAR(tgl_permintaan_anggaran)=$tgl))),0) AS 'November',
+   ifnull((SELECT sum(total) FROM (permintaan_anggaran)  WHERE status_bend=2 and id_akun='$id' and ((Month(tgl_permintaan_anggaran)=12) and (YEAR(tgl_permintaan_anggaran)=$tgl))),0) AS 'Desember'
+  from permintaan_anggaran GROUP BY YEAR(tgl_permintaan_anggaran) 
+   
+   ");
+   
+   return $sql;
+   
+  }
+    public function grafik_pencairan_jenis_kasubbag()
+{
+  $tahun=$this->session->userdata('tahun'); 
+  $id=$this->session->userdata('ses_id');
+    $query = $this->db->query("
+        SELECT p.nama_jenis_npd,
+               COALESCE(SUM(d.total), 0) AS total
+        FROM jenis_npd p
+        LEFT JOIN permintaan_anggaran d ON d.id_jenis_npd = p.id_jenis_npd
+       where year(d.tgl_permintaan_anggaran)=$tahun and  d.status_bend=2 and d.id_akun='$id'
+        GROUP BY p.nama_jenis_npd
+    ");
+    return $query->result();
+  }
+      public function grafik_pencairan_bagian()
+{
+  $tahun=$this->session->userdata('tahun'); 
+  $id=$this->session->userdata('ses_id');
+    $query = $this->db->query("
+       SELECT c.nama_bagian,  sum(a.total) AS total FROM permintaan_anggaran a LEFT JOIN akun b ON a.id_akun=b.id_akun LEFT JOIN pegawai f ON f.id_pegawai=b.id_pegawai left join bagian c on f.id_bagian=c.id_bagian  WHERE a.tahun_anggaran =$tahun AND a.status_bend=2  GROUP by c.nama_bagian
+    ");
+    return $query->result();
+  }
+    public function grafik_pencairan_jenis_pptk()
+{
+  $tahun=$this->session->userdata('tahun'); 
+  $id_bagian=$this->session->userdata('ses_id_bag');
+    $query = $this->db->query("
+      SELECT c.nama_jenis_npd,  sum(a.total) AS total FROM permintaan_anggaran a LEFT JOIN akun b ON a.id_akun=b.id_akun LEFT JOIN pegawai f ON f.id_pegawai=b.id_pegawai left join jenis_npd c on a.id_jenis_npd=c.id_jenis_npd  WHERE a.tahun_anggaran = '2025' AND a.status_bend=2 and f.id_bagian='$id_bagian'  GROUP by c.nama_jenis_npd
+    ");
+    return $query->result();
+  }
+  
   function grafik_transaksi()
   {
   $tgl=$this->session->userdata('tahun');
@@ -363,6 +603,7 @@ function hitung($tabel){
      $query = $this->db->get();
      return $query->result(); 
     }
+
     function get_npd_admin()
   {   
     $id=$this->session->userdata('ses_id');
@@ -402,27 +643,7 @@ function hitung($tabel){
      $query = $this->db->get();
      return $query->result(); 
     }
-    function get_npd_pptk()
-  {   
-    $id=$this->session->userdata('ses_id');
-    $tahun=$this->session->userdata('tahun');
-    $tahun_akun=$this->session->userdata('tahun_akun');
-    $id_bagian=$this->session->userdata('ses_id_bag');
-    $this->db->select('*');
-      $this->db->from('permintaan_anggaran a');
-    $this->db->join('jenis_npd e','a.id_jenis_npd=e.id_jenis_npd','left');
-    $this->db->join('akun b','a.id_akun=b.id_akun','left');
-    $this->db->join('pegawai f','f.id_pegawai=b.id_pegawai','left');
-    $this->db->join('rek_05 d','a.id_rek_05=d.id_rek_05','left');
-    $this->db->join('rek_06 c','a.id_rek_06=c.id_rek_06','left');
-        $this->db->where('a.tahun_anggaran',$tahun_akun);
-        $this->db->where('f.id_bagian',$id_bagian);
-        $this->db->where('a.status_pptk between 1 and 2');
-    $this->db->order_by('a.status_pptk asc');
-      
-     $query = $this->db->get();
-     return $query->result(); 
-    }
+   
     function get_ttd_kpa()
   {   
     $id=$this->session->userdata('ses_id');

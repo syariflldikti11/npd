@@ -697,9 +697,99 @@ echo form_open('kasubbag/laporan_pencairan_kegiatan'); ?>
       <script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
 
 
+ <script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
 </body>
 
 </html>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    Highcharts.chart('pc_jenis', {
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: ''
+        },
+        xAxis: {
+            categories: [
+                <?php foreach ($pc_jenis as $g) echo "'$g->nama_jenis_npd'," ?>
+            ],
+            title: {
+                text: ''
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Total'
+            }
+        },
+        plotOptions: {
+            bar: {
+                dataLabels: {
+                    enabled: true,
+                    format: 'Rp {point.y:,.0f}'
+                }
+            }
+        },
+        tooltip: {
+            pointFormat: '<b>Rp {point.y:,.0f}</b>'
+        },
+        series: [{
+            name: '',
+            colorByPoint: true,
+            data: [
+                <?php foreach ($pc_jenis as $g) echo "$g->total," ?>
+            ]
+        }]
+    });
+});
+</script>
+      <script type="text/javascript">
+jQuery(function(){
+ new Highcharts.Chart({
+  chart: {
+   renderTo: 'chart',
+   type: 'column',
+  },
+  title: {
+   text: ' ',
+   x: -20
+  },
+  subtitle: {
+   text: '',
+   x: -20
+  },
+  xAxis: {
+   categories: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun',
+                'Jul', 'Ags', 'Sep', 'Okt', 'Nov', 'Des']
+  },
+  yAxis: {
+   title: {
+    text: 'Total Pendapatan'
+   }
+  },
+  plotOptions: {
+   column: {
+    dataLabels: {
+     enabled: true, // Menampilkan nilai di atas kolom
+     color: 'black', // Warna teks
+     style: {
+       fontWeight: 'bold'
+     }
+    }
+   }
+  },
+  series: [{
+   name: 'Pendapatan',
+   data: <?php echo json_encode($grafik_transaksi); ?>,
+   color: 'brown'
+  }]
+ });
+}); 
+</script>
       
 <script type="text/javascript">
   new DataTable('#example');

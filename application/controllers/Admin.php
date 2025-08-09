@@ -152,6 +152,7 @@ $sampai = $this->input->post('sampai');
             'judul' => 'Dashboard',
            'jml_pegawai'=>$this->m_umum->hitung('pegawai'),
            'pc_jenis' => $this->m_umum->grafik_pencairan_jenis(),
+           'pc_bagian' => $this->m_umum->grafik_pencairan_bagian(),
 
             
 

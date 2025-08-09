@@ -29,7 +29,7 @@
 
                         </div>
               
-                   <div class="col-md-6">
+                   <div class="col-md-4">
                 <div class="card card-round">
                   <div class="card-header">
                     <div class="card-head-row">
@@ -44,7 +44,7 @@
                 </div>
               </div>
 
-                <div class="col-md-6">
+                <div class="col-md-4">
                 <div class="card card-round">
                   <div class="card-header">
                     <div class="card-head-row">
@@ -58,7 +58,23 @@
                   </div>
                 </div>
               </div>
+                <div class="col-md-4">
+                <div class="card card-round">
+                  <div class="card-header">
+                    <div class="card-head-row">
+                      <div class="card-title">Pencairan Berdasarkan Bagian <?= $tahun=$this->session->userdata('tahun'); ?></div>
+                     
+                    </div>
                   </div>
+                  <div class="card-body">
+                    
+                    <div id="pc_bagian"></div>
+                  </div>
+                </div>
+              </div>
+                 
+                  </div>
+                  
                </div>
 
    

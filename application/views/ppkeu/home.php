@@ -6,8 +6,8 @@
                            </div>
                         </div>
                      </div>
-                     <div class="row">
-                        <div class="col-md-12">
+   <div class="row">
+  <div class="col-md-12">
                            <div class="white_shd full margin_bottom_30">
                               <div class="full graph_head">
                                  <div class="heading1 margin_0">
@@ -28,7 +28,75 @@
                            </div>
 
                         </div>
+                     </div>
+                      <div class="row column1">
+                     
+                        <div class="col-md-12 col-lg-12">
+                           <div class="full counter_section margin_bottom_30">
+                              <div class="couter_icon">
+                                 <div> 
+                                    <i class="fa fa-file blue1_color"></i>
+                                 </div>
+                              </div>
+                              <div class="counter_no">
+                                 <div>
+                                    <p class="total_no"><?= $npd; ?></p>
+                                    <p class="head_couter">NPD Belum Diperiksa</p>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                       
+                     </div>
+                     <div class="row">
+
+              
+                   <div class="col-md-4">
+                <div class="card card-round">
+                  <div class="card-header">
+                    <div class="card-head-row">
+                      <div class="card-title">Pencairan Tahun <?= $tahun=$this->session->userdata('tahun'); ?></div>
+                     
+                    </div>
                   </div>
+                  <div class="card-body">
+                    
+                    <div id="chart"></div>
+                  </div>
+                </div>
+              </div>
+
+                <div class="col-md-4">
+                <div class="card card-round">
+                  <div class="card-header">
+                    <div class="card-head-row">
+                      <div class="card-title">Pencairan Berdasarkan Jenis <?= $tahun=$this->session->userdata('tahun'); ?></div>
+                     
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    
+                    <div id="pc_jenis"></div>
+                  </div>
+                </div>
+              </div>
+                <div class="col-md-4">
+                <div class="card card-round">
+                  <div class="card-header">
+                    <div class="card-head-row">
+                      <div class="card-title">Pencairan Berdasarkan Bagian <?= $tahun=$this->session->userdata('tahun'); ?></div>
+                     
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    
+                    <div id="pc_bagian"></div>
+                  </div>
+                </div>
+              </div>
+                
+                  </div>
+                  
                </div>
 
    

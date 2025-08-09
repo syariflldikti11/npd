@@ -752,6 +752,51 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    Highcharts.chart('pc_bagian', {
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: ''
+        },
+        xAxis: {
+            categories: [
+                <?php foreach ($pc_bagian as $g) echo "'$g->nama_bagian'," ?>
+            ],
+            title: {
+                text: ''
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Total'
+            }
+        },
+        plotOptions: {
+            bar: {
+                dataLabels: {
+                    enabled: true,
+                    format: 'Rp {point.y:,.0f}'
+                }
+            }
+        },
+        tooltip: {
+            pointFormat: '<b>Rp {point.y:,.0f}</b>'
+        },
+        series: [{
+            name: '',
+            colorByPoint: true,
+            data: [
+                <?php foreach ($pc_bagian as $g) echo "$g->total," ?>
+            ]
+        }]
+    });
+});
+</script>
+
       <script type="text/javascript">
 jQuery(function(){
  new Highcharts.Chart({

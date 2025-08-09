@@ -136,10 +136,27 @@ $sampai = $this->input->post('sampai');
     {
         $data = array(
             'judul' => 'Dashboard',
+            'npd' => $this->m_umum->hitung_npd_bend(),
+           'pc_jenis' => $this->m_umum->grafik_pencairan_jenis_pptk(),
            
-            
 
         );
+         foreach($this->m_umum->grafik_transaksi_pptk()->result_array() as $row)
+        {
+         $data['grafik_transaksi'][]=(float)$row['Januari'];
+         $data['grafik_transaksi'][]=(float)$row['Februari'];
+         $data['grafik_transaksi'][]=(float)$row['Maret'];
+         $data['grafik_transaksi'][]=(float)$row['April'];
+         $data['grafik_transaksi'][]=(float)$row['Mei'];
+         $data['grafik_transaksi'][]=(float)$row['Juni'];
+         $data['grafik_transaksi'][]=(float)$row['Juli'];
+         $data['grafik_transaksi'][]=(float)$row['Agustus'];
+         $data['grafik_transaksi'][]=(float)$row['September'];
+         $data['grafik_transaksi'][]=(float)$row['Oktober'];
+         $data['grafik_transaksi'][]=(float)$row['November'];
+         $data['grafik_transaksi'][]=(float)$row['Desember'];
+        }
+         
          
         $this->template->load('bendahara/template', 'bendahara/home', $data);
     }
